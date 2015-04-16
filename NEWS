@@ -1,0 +1,200 @@
+CHANGES IN VERSION 1.3.4
+------------------------
+
+PKG FEATURES
+
+  o A new method, broadenrich, is available in the chipenrich function which is
+    designed for gene set enrichment on broad genomic regions, such as peaks resulting
+    from histone modificaiton based ChIP-seq experiments.
+
+  o Methods chipenrich and broadenrich are available in multicore versions (on every
+    platform except Windows). The user selects the number of cores when calling
+    the chipenrich function.
+
+  o Peaks downloaded from the ENCODE Consortium as .broadPeak or .narrowPeak files
+    are supported directly.
+
+  o Peaks downloaded from the modENCODE Consortium as .bed.gff or .bed.gff3 files are
+    also supported directly.
+
+  o Support for D. melanogaster (dm3) genome and enrichment testing for GO terms
+    from all three branches (GOBP, GOCC, and GOMF).
+
+  o New gene sets from Reactome (http://www.reactome.org) for human, mouse, and rat.
+
+  o New example histone data set, peaks_H3K4me3_GM12878, based on hg19.
+
+  o New locus definitions including: introns, 10kb within TSS, and 10kb upstream of TSS.
+
+
+CHANGES IN VERSION 1.0
+----------------------
+
+PKG FEATURES
+
+  o chipenrich performs gene set enrichment tests on peaks called from
+    a ChIP-seq experiment
+
+  o chipenrich empirically corrects for confounding factors such as
+    the length of genes and mappability of sequence surrounding genes
+
+  o Use multiple definitions of a gene "locus" when testing for enrichment,
+    or provide your own definition
+
+  o Test for enrichment using chipenrich or Fisher's exact test (should only
+    be used for datasets where peaks are close to TSSs, see docs)
+
+  o Test multiple sets of genesets (Gene Ontology, KEGG, Biocarta, OMIM, etc.)
+
+  o Multiple plots to describe binding distance and likelihood of a peak
+    as a function of gene length
+
+  o Support for human (hg19), mouse (mm9), and rat (rn4) genomes
+
+  o Many conveniences such as seeing which peaks were assigned to genes,
+    their position relative to those genes and their TSS, etc.
+
+  o See how many peaks were assigned to each gene along with the length and
+    mappability of the gene
+
+
+CHANGES IN VERSION 0.99.2
+-------------------------
+
+USER-VISIBLE CHANGES
+
+  o Updated examples for various functions to be runnable (removed donttest)
+  o Updated DESCRIPTION to use Imports: rather than Depends:
+  o Updated license to GPL-3
+  o Updated NEWS file for bioconductor guidelines
+
+BUG FIXES
+
+  o Added a correction for the case where a small gene set has a peak in
+    every gene. This has the result of making a very few number of tests
+    slightly conservative, at the benefit of actually being able to return
+    a p-value for them.
+
+CHANGES IN VERSION 0.99.1
+-------------------------
+
+USER-VISIBLE CHANGES
+
+  o Minor updates to documentation for Bioconductor
+
+CHANGES IN VERSION 0.99.0
+-------------------------
+
+NEW FEATURES
+
+  o Initial submission to Bioconductor
+
+CHANGES IN VERSION 0.9.6
+------------------------
+
+NEW FEATURES
+
+  o Added peaks per gene as a returned object / output file
+
+CHANGES IN VERSION 0.9.5
+------------------------
+
+BUG FIXES
+
+  o Update to handle bioconductor/IRange's new "functionality" for distanceToNearest and distance
+
+USER-VISIBLE CHANGES
+
+  o Changed sorting of results to put enriched terms first (sorted by p-value), then depleted (also sorted by p-value)
+
+CHANGES IN VERSION 0.9.4
+------------------------
+
+USER-VISIBLE CHANGES
+
+  o Minor changes to vignette and documentation
+
+CHANGES IN VERSION 0.9.3
+------------------------
+
+NEW FEATURES
+
+  o Addition of rat genome
+
+BUG FIXES
+
+  o chipenrich() will correctly open both .bed and .bed.gz files now
+
+CHANGES IN VERSION 0.9.2
+------------------------
+
+NEW FEATURES
+
+  o Added ability for user to input their own locus definition file (pass the full path to a file as the locusdef argument)
+  o Added a data frame to the results object that gives the arguments/values passed to chipenrich, also written to file *_opts.tab
+  o For FET and chipenrich methods, the outcome variable can be recoded to be >= 1 peak, 2 peaks, 3 peaks, etc. using the num_peak_threshold parameter
+  o Added a parameter to set the maximum size of gene set that should be tested (defaults to 2000)
+
+USER-VISIBLE CHANGES
+
+  o Previously only peak midpoints were given in the peak --> gene assignments file, now the original peak start/ends are also given
+  o Updated help/man with new parameters and more information about the results
+
+BUG FIXES
+
+  o Fixed an issue where status in results was not enriched if the odds ratio was infinite, and depleted if the odds ratio was exactly zero
+
+CHANGES IN VERSION 0.9.1
+------------------------
+
+NEW FEATURES
+
+  o Added a QC plot for expected # of peaks and actual # of peaks vs. gene locus length. This will be automatically created if qc_plots is TRUE, or the plots can be created using the plot_expected_peaks function.
+  o Distance to TSS is now signed for upstream (-) and downstream (+) of TSS
+  o Column added to indicate whether the geneset is enriched or depleted
+
+CHANGES IN VERSION 0.9
+----------------------
+
+NEW FEATURES
+
+  o Added support for reading BED files natively
+
+BUG FIXES
+
+  o Fixed bug where invalid geneset in chipenrich() wasn't detected properly
+
+CHANGES IN VERSION 0.8
+----------------------
+BUG FIXES
+
+  o Fixed crash when mappability contained an NA (will be removed from DB in future version)
+
+CHANGES IN VERSION 0.7
+----------------------
+
+USER-VISIBLE CHANGES
+
+  o Updated binomial test to sum gene locus lengths to get genome length and remove genes that are not present in the set of genes being tested
+  o Updated spline fit plot to take into account mappability if requested (log mappable locus length plotted instead of simply log locus length)
+  o Removed SAMPLEABLE_GENOME* constants since they are no longer needed
+  o Updated help files to reflect changes to plot_spline_length and chipenrich functions
+
+BUG FIXES
+
+  o Fixed bug where results for multiple gene set types (e.g. doing BioCarta and KEGG together) were not sorted by p-value
+
+CHANGES IN VERSION 0.6
+----------------------
+
+BUG FIXES
+
+  o Fixed bug where 1kb/5kb locusdefs could fail if not all peaks were assigned to a gene
+
+CHANGES IN VERSION 0.5
+----------------------
+
+USER-VISIBLE CHANGES
+
+  o Updated help to explain new mappability model
+  o Changed how mappability is handled - now multiplies gene locus length by mappability, rather than adjusting as a spline term
