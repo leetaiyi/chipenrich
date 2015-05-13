@@ -1,27 +1,27 @@
 Package: chipenrich
 Type: Package
 Title: Gene set enrichment for ChIP-seq peak data
-Version: 1.6.0
-Date: 2014-10-02
+Version: 1.6.1
+Date: 2015-05-12
 Authors@R: c(
   person(c("Ryan","P."),"Welch",role = c("aut","cre","cph"),email = "welchr@umich.edu"),
   person("Chee","Lee",role = c("aut","cre"),email = "cheelee@umich.edu"),
   person(c("Raymond","G."),"Cavalcante",role = c("aut","cre"),email = "rcavalca@umich.edu"),
   person(c("Laura","J."),"Scott",role = c("ths"), email = "ljst@umich.edu"),
   person(c("Maureen","A."),"Sartor",role = c("ths"),email = "sartorma@med.umich.edu"))
-Description: ChIP-Enrich performs gene set enrichment testing 
+Description: ChIP-Enrich performs gene set enrichment testing
 	using peaks called from a ChIP-seq experiment. The method empirically
-	corrects for confounding factors such as the length of genes, 
-	and the mappability of the sequence surrounding genes. 
+	corrects for confounding factors such as the length of genes,
+	and the mappability of the sequence surrounding genes.
 biocViews: Software, Bioinformatics, Enrichment, GeneSetEnrichment
 License: GPL-3
 Imports: chipenrich.data, methods, GenomicRanges (>= 1.10.0), IRanges (>= 1.16.0), mgcv, plyr (>= 1.7.0), lattice, latticeExtra, grid, stringr (>= 0.6), rms
 Depends: R (>= 2.15.1)
 Enhances: parallel
 LazyLoad: yes
-Author: Ryan P. Welch [aut, cre, cph], 
-  Chee Lee [aut, cre], 
+Author: Ryan P. Welch [aut, cre, cph],
+  Chee Lee [aut, cre],
   Raymond G. Cavalcante [aut, cre],
-  Laura J. Scott [ths], 
+  Laura J. Scott [ths],
   Maureen A. Sartor [ths]
 Maintainer: Ryan P. Welch <welchr@umich.edu>, Chee Lee <cheelee@umich.edu>, Raymond G. Cavalcante <rcavalca@umich.edu>

@@ -15,7 +15,7 @@
 \begin{document}
 
 \title{chipenrich:  A package for gene set enrichment \linebreak testing of genome region data}
-\author{R.P. Welch, C. Lee, R.G. Cavalcante, R.A. Smith, P. Imbriano, S. Patil, T. Weymouth, L.J. Scott, M.A. Sartor}
+\author{R.P. Welch, \and C. Lee, \and R.G. Cavalcante, \and R.A. Smith, \and P. Imbriano, \and S. Patil, \and T. Weymouth, \and L.J. Scott, \and M.A. Sartor}
 \maketitle
 \tableofcontents
 
