@@ -1,0 +1,21 @@
+##gff-version 3
+##genome-build FlyBase r5.6
+2L	MACS	protein_binding_site	5545	6009	.	.	.	ID=0
+2L	MACS	protein_binding_site	71375	74505	.	.	.	ID=1
+2L	MACS	protein_binding_site	86891	87947	.	.	.	ID=2
+2L	MACS	protein_binding_site	94625	95812	.	.	.	ID=3
+2L	MACS	protein_binding_site	101805	103033	.	.	.	ID=4
+2L	MACS	protein_binding_site	105363	111550	.	.	.	ID=5
+2L	MACS	protein_binding_site	119913	121560	.	.	.	ID=6
+2L	MACS	protein_binding_site	124034	126983	.	.	.	ID=7
+2L	MACS	protein_binding_site	127077	132676	.	.	.	ID=8
+2L	MACS	protein_binding_site	134411	135731	.	.	.	ID=9
+2L	MACS	protein_binding_site	135749	137836	.	.	.	ID=10
+2L	MACS	protein_binding_site	139273	140467	.	.	.	ID=11
+2L	MACS	protein_binding_site	140543	143838	.	.	.	ID=12
+2L	MACS	protein_binding_site	154600	160099	.	.	.	ID=13
+2L	MACS	protein_binding_site	160157	162701	.	.	.	ID=14
+2L	MACS	protein_binding_site	164912	167470	.	.	.	ID=15
+2L	MACS	protein_binding_site	170134	170917	.	.	.	ID=16
+2L	MACS	protein_binding_site	178635	179505	.	.	.	ID=17
+2L	MACS	protein_binding_site	180084	181879	.	.	.	ID=18
