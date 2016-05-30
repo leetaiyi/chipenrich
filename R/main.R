@@ -895,39 +895,27 @@ single_gam = function(go_id, geneset, gpw, method, model) {
 		r_go_genes_avg_coverage = mean(gpw$ratio[b_genes]);
 	}
 
-    # Small correction for case where every gene in this geneset has a peak.
-	if (all(as.logical(sg_go))) {
-	  cont_length = quantile(gpw$length,0.0025);
+	# Small correction for case where every gene in this geneset has a peak.
+	if(method == 'chipenrich') {
+		if (all(as.logical(sg_go))) {
+			cont_length = quantile(gpw$length,0.0025);
 
-	  if(method == 'chipenrich') {
-		  cont_gene = data.frame(
-			geneid = "continuity_correction",
-			length = cont_length,
-			log10_length = log10(cont_length),
-			num_peaks = 0,
-			peak = 0,
-			stringsAsFactors = F
-		  );
-	  } else if (method == 'broadenrich' || method == 'broadenrich_splineless') {
-		  cont_gene = data.frame(
-			geneid = "continuity_correction",
-			length = cont_length,
-			log10_length = log10(cont_length),
-			num_peaks = 0,
-			peak = 0,
-			peak_overlap = 0,
-			ratio = 0,
-			stringsAsFactors = F
-		  );
-	  }
+			cont_gene = data.frame(
+				geneid = "continuity_correction",
+				length = cont_length,
+				log10_length = log10(cont_length),
+				num_peaks = 0,
+				peak = 0,
+				stringsAsFactors = F)
 
-	  if ("mappa" %in% names(gpw)) {
-		cont_gene$mappa = 1;
-	  }
-	  gpw = rbind(gpw,cont_gene);
-	  b_genes = c(b_genes,1);
+			if ("mappa" %in% names(gpw)) {
+				cont_gene$mappa = 1;
+			}
+			gpw = rbind(gpw,cont_gene);
+			b_genes = c(b_genes,1);
 
-	  message(sprintf("Applying correction for geneset %s with %i genes...",go_id,length(go_genes)));
+			message(sprintf("Applying correction for geneset %s with %i genes...",go_id,length(go_genes)));
+		}
 	}
 
     # Logistic regression works no matter the method because final_model is chosen above
