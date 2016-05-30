@@ -2117,33 +2117,13 @@ chipenrich = function(
   	genesets = gsub('_rndloc','',genesets)
   }
 
-  # Assign all chipenrich opts to a special environment
-  # This prevents huge opts outputs for particular modes of running chipenrich
-  opts_env = new.env()
-  assign('os' = os, envir = opts_env)
-  assign('peaks' = peaks, envir = opts_env)
-  assign('out_name' = out_name, envir = opts_env)
-  assign('out_path' = out_path, envir = opts_env)
-  assign('genome' = genome, envir = opts_env)
-  assign('genesets' = genesets, envir = opts_env)
-  assign('locusdef' = locusdef, envir = opts_env)
-  assign('method' = method, envir = opts_env)
-  assign('fisher_alt' = fisher_alt, envir = opts_env)
-  assign('use_mappability' = use_mappability, envir = opts_env)
-  assign('mappa_file' = mappa_file, envir = opts_env)
-  assign('read_length' = read_length, envir = opts_env)
-  assign('qc_plots' = qc_plots, envir = opts_env)
-  assign('max_geneset_size' = max_geneset_size, envir = opts_env)
-  assign('num_peak_threshold' = num_peak_threshold, envir = opts_env)
-  assign('n_cores' = n_cores, envir = opts_env)
-
-  opts_l = unlist(as.list(opts_env))
-
-  opts = data.frame(
-  	args = names(opts_l),
-  	values = sapply(unlist(opts_l), paste, collapse=","),
-  	stringsAsFactors = F)
-  rownames(opts) = 1:length(opts_l)
+  l = unlist(as.list(environment()));
+    opts = data.frame(
+    args = names(l),
+    values = sapply(unlist(l),paste,collapse=","),
+    stringsAsFactors = F
+  );
+  rownames(opts) = 1:length(l);
 
   # Check genome.
   if (!genome %in% supported_genomes()) {
