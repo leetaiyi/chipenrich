@@ -21,7 +21,8 @@ HIDDEN_METHODS = list(
   'binomial' = "test_binomial",
   'chipapprox' = 'test_approx',
   'broadenrich_splineless' = "test_gam_ratio_splineless",
-  'countenrich' = 'test_gam_nb'
+  'countenrich' = 'test_gam_nb',
+  'chipenrich_fast' = 'test_gam_fast'
 );
 
 METHOD_NAMES = list(
@@ -30,7 +31,8 @@ METHOD_NAMES = list(
 	'broadenrich' = "Broad-Enrich",
 	'chipapprox' = "ChIP-Enrich Approximate",
 	'broadenrich_splineless' = "Broad-Enrich Splineless",
-	'countenrich' = 'Count-Enrich'
+	'countenrich' = 'Count-Enrich',
+	'chipenrich_fast' = 'ChIP-Enrich Fast'
 );
 
 # This is the main function to read files
@@ -2406,6 +2408,9 @@ chipenrich = function(
       rtemp = test_func(gobj,ppg,n_cores);
     }
     if (testf == "test_gam_nb") {
+      rtemp = test_func(gobj,ppg,n_cores);
+    }
+    if (testf == "test_gam_fast") {
       rtemp = test_func(gobj,ppg,n_cores);
     }
 
