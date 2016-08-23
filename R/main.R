@@ -1906,7 +1906,7 @@ chipenrich = function(
   # assign_peak_segments(...).
   if(!(method == 'broadenrich' || method == 'broadenrich_splineless')) {
 	message("Assigning peaks to genes with assign_peaks(...) ..");
-	assigned_peaks = assign_peaks(peakobj,ldef,tss,midpoint=T);
+	assigned_peaks = assign_peaks(peakobj,ldef,tss);
 	message("Successfully assigned peaks..")
   } else {
   	message("Assigning peaks to genes with assigned_peak_segments(...) ..");

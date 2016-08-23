@@ -2,6 +2,8 @@
 
 export(assign_peak_segments)
 export(assign_peaks)
+export(calc_peak_gene_overlap)
+export(num_peaks_per_gene)
 import(chipenrich.data)
 import(dplyr)
 import(grid)
