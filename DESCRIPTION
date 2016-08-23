@@ -10,19 +10,34 @@ Authors@R: c(
   person(c("Laura","J."),"Scott",role = c("ths"), email = "ljst@umich.edu"),
   person(c("Maureen","A."),"Sartor",role = c("ths"),email = "sartorma@med.umich.edu"))
 Description: ChIP-Enrich performs gene set enrichment testing
-	using peaks called from a ChIP-seq experiment. The method empirically
-	corrects for confounding factors such as the length of genes,
-	and the mappability of the sequence surrounding genes.
+    using peaks called from a ChIP-seq experiment. The method empirically
+    corrects for confounding factors such as the length of genes,
+    and the mappability of the sequence surrounding genes.
 biocViews: Software, Bioinformatics, Enrichment, GeneSetEnrichment
 License: GPL-3
-Imports: chipenrich.data, methods, GenomicRanges (>= 1.10.0), IRanges (>= 1.16.0), mgcv, plyr (>= 1.7.0), lattice, latticeExtra, grid, stringr (>= 0.6), rms
-Suggests: testthat
-Depends: R (>= 2.15.1)
+Imports:
+    chipenrich.data,
+    methods,
+    GenomicRanges (>= 1.10.0),
+    IRanges (>= 1.16.0),
+    mgcv,
+    plyr (>= 1.7.0),
+    lattice,
+    latticeExtra,
+    grid,
+    stringr (>= 0.6),
+    rms
+Suggests:
+    testthat
+Depends:
+    R (>= 2.15.1)
 Enhances: parallel
 LazyLoad: yes
 Author: Ryan P. Welch [aut, cre, cph],
-  Chee Lee [aut, cre],
-  Raymond G. Cavalcante [aut, cre],
-  Laura J. Scott [ths],
-  Maureen A. Sartor [ths]
-Maintainer: Raymond G. Cavalcante <rcavalca@umich.edu>, Chee Lee <cheelee@umich.edu>
+    Chee Lee [aut, cre],
+    Raymond G. Cavalcante [aut, cre],
+    Laura J. Scott [ths],
+    Maureen A. Sartor [ths]
+Maintainer: Raymond G. Cavalcante <rcavalca@umich.edu>, Chee Lee
+    <cheelee@umich.edu>
+RoxygenNote: 5.0.1
