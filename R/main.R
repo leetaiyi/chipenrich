@@ -155,18 +155,8 @@ randomize_ppg_length = function(ppg) {
 	return(ppg)
 }
 
-# Used in ..plot_spline_length(...)
-add_emp_peak = function(gpw,bin_size=25) {
-  d = gpw;
-  d = d[order(d$log10_length),];
-  d$group = ceiling((1:dim(d)[1])/bin_size);
-
-  bygroup = stats::aggregate(peak ~ group,d,mean);
-  d$emp_peak = bygroup$peak[d$group];
-  d;
-}
-
 # Used in plot_spline_mappa(...)
+# Which is not called
 add_emp_peak_mappa = function(gpw,bin_size=25) {
   d = gpw;
   d = d[order(d$mappa),];
@@ -177,19 +167,8 @@ add_emp_peak_mappa = function(gpw,bin_size=25) {
   d;
 }
 
-# Used in ..plot_spline_length(...)
-avg_binned_peak = function(gpw,bin_size=25) {
-  d = gpw;
-  d = d[order(d$log10_length),];
-  d$group = ceiling((1:dim(d)[1])/bin_size);
-
-  bygroup = stats::aggregate(cbind(peak,length) ~ group,d,mean);
-  bygroup$log_avg_length = log10(bygroup$length);
-  names(bygroup) = c("group","peak","avg_length","log_avg_length");
-  bygroup;
-}
-
 # Used in plot_spline_mappa(...)
+# Which is not called
 avg_binned_peak_mappa = function(gpw,bin_size=25) {
   d = gpw;
   d = d[order(d$mappa),];
@@ -212,59 +191,8 @@ avg_binned_coverage = function(gpw,bin_size=25) {
   bygroup;
 }
 
-# Used in ..plot_spline_length(...)
-calc_weights_gam = function(locusdef,peak_genes,mappa=NULL,...) {
-  d = locusdef@dframe;
-
-  # Indicator vector for which genes have peaks.
-  d$peak = as.numeric(d$geneid %in% peak_genes);
-
-  # Compute length and log10 length for each gene.
-  d$length = d$end - d$start;
-
-  # For genes that exist across multiple rows, sum their lengths.
-  d = stats::aggregate(cbind(peak,length) ~ geneid,d,sum);
-  d$log10_length = log10(d$length);
-
-  # A gene could now have > 1 peak due to aggregating (above), reset it to be
-  # 1 or 0.
-  d$peak = as.integer(d$peak >= 1);
-
-  # Sort by locus length.
-  d = d[order(d$log10_length),];
-
-  # If mappability was requested, add that in.
-  if (!is.null(mappa)) {
-    d = merge(d,mappa,by="geneid",sort=F);
-    d$orig_length = d$length;
-    d$length = as.numeric((d$mappa * d$length) + 1);
-    d$log10_length = log10(d$length);
-    d = d[order(d$log10_length),];
-  }
-
-  # Create model.
-  model = "peak ~ s(log10_length,bs='cr')";
-
-  # Compute binomial spline fit.
-  fit = gam(as.formula(model),data=d,family="binomial");
-
-  # Compute weights for each gene, based on the predicted prob(peak) for each gene.
-  ppeak = fitted(fit);
-  w0 = 1 / (ppeak/mean(d$peak,na.rm=T));
-  w0 = w0 / mean(w0,na.rm=T);
-
-  d$weight = w0;
-  d$prob_peak = ppeak;
-  d$resid.dev = resid(fit,type="deviance");
-
-  cols = c("geneid","length","log10_length","mappa","orig_length","peak","weight","prob_peak","resid.dev");
-  if (is.null(mappa)) {
-    cols = setdiff(cols,c("mappa","orig_length"));
-  }
-  d = subset(d,select=cols);
-  return(d);
-}
-
+# Used in plot_spline_mappa()
+# Which is not called
 calc_spline_mappa = function(locusdef,peak_genes,mappa,...) {
   d = locusdef@dframe;
 
@@ -976,166 +904,7 @@ plot_expected_peaks = function(peaks,locusdef="nearest_tss",genome="hg19",use_ma
   return(p);
 }
 
-# Do the below, but from "scratch"
-plot_spline_length = function(peaks,locusdef="nearest_tss",genome='hg19',use_mappability=F,read_length=36,legend=T,xlim=NULL) {
-	# Check genome.
-  if (!genome %in% supported_genomes()) {
-    stop("genome not supported: ",genome);
-  }
-
-  # Check locus definition. Should only be 1.
-  if (!locusdef %in% supported_locusdefs()) {
-    stop("bad locus definition requested: ",locusdef);
-  }
-
-  # Check read length.
-  if (use_mappability) {
-    if (!as.numeric(read_length) %in% supported_read_lengths()) {
-      stop("bad read length requested: ",read_length);
-    }
-  }
-
-	# Get peaks from user's file.
-	if (class(peaks) == "data.frame") {
-		peakobj = load_peaks(peaks);
-	} else if (class(peaks) == "character") {
-    if (get_ext(peaks) == "bed") {
-      message("Reading BED file: ",peaks);
-      peakobj = read_bed(peaks);
-    } else {
-      message("Reading peaks file: ",peaks);
-      peakobj = read_peaks(peaks);
-    }
-	}
-
-	# Number of peaks in data.
-  num_peaks = sum(sapply(peakobj,function(x) length(x)))
-
-  # Load locus definitions.
-  ldef_code = sprintf("locusdef.%s.%s",genome,locusdef);
-  data(list=ldef_code,package = "chipenrich.data");
-  ldef = get(ldef_code);
-
-	# Load TSS site info.
-  tss_code = sprintf("tss.%s",genome);
-  data(list=tss_code,package = "chipenrich.data");
-  tss = get(tss_code);
-
-  # Load mappability if requested.
-  if (use_mappability) {
-    mappa_code = sprintf("mappa.%s.%s.%imer",genome,locusdef,read_length);
-    data(list=mappa_code,package = "chipenrich.data");
-    mappa = get(mappa_code);
-  } else {
-    mappa = NULL;
-  }
-
-  # Assign peaks to genes.
-  assigned_peaks = assign_peaks(peakobj,ldef,tss);
-  peak_genes = unique(assigned_peaks$geneid);
-
-	# Make plot.
-	plotobj = ..plot_spline_length(ldef,peak_genes,num_peaks,mappa,legend=legend,xlim=xlim);
-	return(plotobj);
-}
-
-# Create diagnostic plot of Proportion of Peaks from your data against log locus length (of genes)
-# along with the spline fit.
-..plot_spline_length = function(locusdef,peak_genes,num_peaks,mappa=NULL,legend=T,xlim=NULL) {
-  # Calculate smoothing spline fit.
-  gpw = calc_weights_gam(locusdef,peak_genes,mappa=mappa); # gpw = genes, peaks, weights
-
-  # Genome length.
-  genome_length = sum(as.numeric(gpw$length));
-
-  # Add in empirical peak by binning.
-  gpw = add_emp_peak(gpw);
-
-  # Average peak/lengths.
-  avg_bins = avg_binned_peak(gpw,bin_size=25);
-
-  # Order by length.
-  gpw = gpw[order(gpw$log10_length),];
-
-  # Calculate prob(all false positives).
-  gpw$false_prob = 1 - (1 - (gpw$length/genome_length))^(num_peaks);
-
-  col_rand_gene = "grey35";
-  col_rand_peak = "grey74";
-  col_spline = "darkorange";
-
-  panel_func = function(x,y,...) {
-    panel.xyplot(x,y,...);
-    panel.abline(h=mean(y),col=col_rand_gene,lwd=3);
-  }
-
-  custom_key = list(
-    text = list(
-      c(
-        "Expected Fit - Peaks Independent of Locus Length",
-        "Expected Fit - Peaks Proportional to Locus Length",
-        "Binomial Smoothing Spline Fit",
-        "Proportion of Genes in Bin with at Least 1 Peak"
-      )
-    ),
-    lines = list(
-      pch = c(20,15,17,20),
-      type = c("l","l","l","p"),
-      col = c(col_rand_gene,col_rand_peak,col_spline,"black"),
-      lwd = 3
-    ),
-    cex = 1.2
-  );
-
-  if (!legend) {
-    custom_key = NULL;
-  }
-
-  if (!is.null(mappa)) {
-    xlab = expression(paste(Log[10]," Mappable Locus Length"))
-  } else {
-    xlab = expression(paste(Log[10]," Locus Length"))
-  }
-
-	xmin_nopad = base::ifelse(is.null(xlim[1]),floor(min(gpw$log10_length)),floor(xlim[1]));
-	xmax_nopad = base::ifelse(is.null(xlim[2]),ceiling(max(gpw$log10_length)),ceiling(xlim[2]));
-
-	scales = list(
-		x = list(
-			axs = 'i',
-			at = seq(xmin_nopad,xmax_nopad,1)
-		),
-		y = list(
-			axs = 'i',
-			at = seq(0,1,0.2)
-		)
-	);
-
-  plotobj = xyplot(
-    false_prob + prob_peak ~ log10_length,
-    gpw,
-    xlab=list(label=xlab,cex=1.4),
-    ylab=list(label="Proportion of Peaks",cex=1.4),
-    ylim=c(-0.05,1.05),
-		xlim=c(xmin_nopad - 0.5,xmax_nopad + 0.5),
-    panel=panel_func,
-    type="l",
-    lwd=3,
-    key=custom_key,
-    scales=list(cex=1.4),
-    par.settings=simpleTheme(pch=c(15,17),col=c(col_rand_peak,col_spline))
-  ) + as.layer(xyplot(peak ~ log_avg_length,avg_bins,pch=20,cex=0.4,col="black"));
-
-  #trellis.focus("panel",1,1,highlight=F);
-  #gpw_peak = subset(gpw,peak == 1);
-  #gpw_nopeak = subset(gpw,peak == 0);
-  #panel.rug(gpw_peak$log10_length,regular=F,col="black");
-  #panel.rug(gpw_nopeak$log10_length,regular=T,col="black");
-  #trellis.unfocus();
-
-  return(plotobj);
-}
-
+# Not used or exported
 plot_spline_mappa = function(locusdef,peak_genes,mappa) {
   # Calculate spline for mappability.
   gpw = calc_spline_mappa(locusdef,peak_genes,mappa);
