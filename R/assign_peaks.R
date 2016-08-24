@@ -41,7 +41,7 @@ assign_peaks = function(peaks, locusdef, tss) {
 
 	# Determine midpoints of peaks and construct a GRanges object
 	# on that basis. Include the peak name for later merging
-	peak_mids = IRanges::mid(ranges(peaks))
+	peak_mids = IRanges::mid(GenomicRanges::ranges(peaks))
 	mids_gr = GenomicRanges::GRanges(
 		seqnames = GenomeInfoDb::seqnames(peaks),
 		ranges = IRanges::IRanges(start = peak_mids, end = peak_mids),

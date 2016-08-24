@@ -223,6 +223,15 @@ chipenrich = function(
 
 	############################################################################
 	# CHECK method and get() it if okay
+	get_test_method = function(x) {
+		if (method %in% names(SUPPORTED_METHODS)) {
+			return(SUPPORTED_METHODS[[method]])
+		} else if (method %in% names(HIDDEN_METHODS)) {
+			return(HIDDEN_METHODS[[method]])
+		} else {
+			stop(sprintf("Error: invalid enrichment test requested: %s, contact developer.",method))
+		}
+	}
 	testf = get_test_method(method)
 	test_func = get(testf)
 
