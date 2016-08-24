@@ -11,47 +11,6 @@ library(stringr);
 library(rms);
 library(parallel);
 
-SUPPORTED_METHODS = list(
-  'chipenrich' = "test_gam",
-  'fet' = "test_fisher_exact",
-  'broadenrich' = "test_gam_ratio"
-);
-
-HIDDEN_METHODS = list(
-  'binomial' = "test_binomial",
-  'chipapprox' = 'test_approx',
-  'broadenrich_splineless' = "test_gam_ratio_splineless"
-);
-
-METHOD_NAMES = list(
-	'fet' = "Fisher's Exact Test",
-	'chipenrich' = "ChIP-Enrich",
-	'broadenrich' = "Broad-Enrich",
-	'chipapprox' = "ChIP-Enrich Approximate",
-	'broadenrich_splineless' = "Broad-Enrich Splineless"
-);
-
-
-
-# d_fwf = function(d) {
-  # d = colwise(as.character)(d);
-  # widths = sapply(d,function(x) max(nchar(x)));
-  # widths + 2;
-
-  # final = NULL;
-  # for (i in 1:dim(d)[2]) {
-    # n = names(d)[i];
-    # sf = sprintf("%%-0%is",widths[i]);
-    # v = sprintf(sf,d[,n]);
-    # final = cbind(final,v);
-  # }
-
-  # final = data.frame(final,stringsAsFactors=F);
-  # names(final) = names(d);
-
-  # final;
-# }
-
 chipenrich = function(
   peaks,
   out_name = "chipenrich",
