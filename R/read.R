@@ -1,4 +1,29 @@
-# This is the main function to read files
+#' Read BEDX+Y files and convert into GRanges
+#'
+#' Given a \code{file_path}, read in a delimited file, assuming it is BEDX+Y,
+#' keep only the first three columns: chrom, start, end, and output \code{GRanges}.
+#'
+#' Typically, this function will not be used alone, but inside \code{chipenrich()}.
+#'
+#' @param file_path A path to a valid BEDX+Y file.
+#'
+#' @return A \code{GRanges} that is unstranded, and contains only chrom, start, and end.
+#'
+#' @examples
+#'
+#' # Example of BED3 with no header
+#' file = system.file('extdata', 'test_assign.bed', package = 'chipenrich')
+#' peaks = read_bed(file)
+#'
+#' # Example of BED3 with header
+#' file = system.file('extdata', 'test_header.bed', package = 'chipenrich')
+#' peaks = read_bed(file)
+#'
+#' # Example of narrowPeak with header
+#' file = system.file('extdata', 'test.narrowPeak', package = 'chipenrich')
+#' peaks = read_bed(file)
+#'
+#' @export
 read_bed = function(file_path) {
 	if (!file.exists(file_path)) {
 		stop("Can't find BED file: ",file_path)
@@ -40,7 +65,29 @@ read_bed = function(file_path) {
 	return(gr)
 }
 
-# This file type is for D. melanogaster files from modENCODE
+#' Read BEDGFF files and convert into GRanges
+#'
+#' Given a \code{file_path}, read in a delimited file, assuming it is BEDGFF (as
+#' is output by modENCODE for D. Melanogaster TF ChIP-seq experiments), keep
+#' only chrom, start, and end columns, and output \code{GRanges}.
+#'
+#' Typically, this function will not be used alone, but inside \code{chipenrich()}.
+#'
+#' @param file_path A path to a valid BEDGFF file (as from modENCODE).
+#'
+#' @return A \code{GRanges} that is unstranded, and contains only chrom, start, and end.
+#'
+#' @examples
+#'
+#' # Example of GFF3
+#' file = system.file('extdata', 'test.gff3', package = 'chipenrich')
+#' peaks = read_bedgff(file)
+#'
+#' # Example of gzipped GFF3
+#' file = system.file('extdata', 'test.gff3.gz', package = 'chipenrich')
+#' peaks = read_bed(file)
+#'
+#' @export
 read_bedgff = function(file_path) {
 	if (!file.exists(file_path)) {
 		stop("Can't find BED file: ",file_path)
@@ -82,7 +129,24 @@ read_bedgff = function(file_path) {
 	return(gr)
 }
 
-# Read peaks from a dataframe having a particular structure
+#' Convert BEDX+Y data.frames and into GRanges
+#'
+#' Given a \code{data.frame} in BEDX+Y format, keep only the first three
+#' columns: chrom, start, end, and output \code{GRanges}.
+#'
+#' Typically, this function will not be used alone, but inside \code{chipenrich()}.
+#'
+#' @param dframe A BEDX+Y style \code{data.frame}.
+#'
+#' @return A \code{GRanges} that is unstranded, and contains only chrom, start, and end.
+#'
+#' @examples
+#'
+#' # Example of BED3 with no header
+#' data(peaks_H3K4me3_GM12878, package='chipenrich.data')
+#' peaks = load_peaks(peaks_H3K4me3_GM12878)
+#'
+#' @export
 load_peaks = function(dframe) {
 	# Check columns.
 	for (col in c("chrom","start","end")) {

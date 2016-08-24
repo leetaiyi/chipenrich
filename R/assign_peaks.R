@@ -16,13 +16,7 @@
 #' data('tss.hg19', package = 'chipenrich.data')
 #'
 #' file = system.file('extdata', 'test_assign.bed', package = 'chipenrich')
-#' peaks = annotatr::read_regions(
-#' 	file = file,
-#' 	genome = 'hg19',
-#' 	stranded = FALSE,
-#' 	col_names = c('chr','start','end'),
-#' 	col_types = c('cii'),
-#' 	quiet = TRUE)
+#' peaks = read_bed(file)
 #'
 #' assigned_peaks = assign_peaks(
 #' 	peaks = peaks,
