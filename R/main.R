@@ -212,30 +212,6 @@ avg_binned_coverage = function(gpw,bin_size=25) {
   bygroup;
 }
 
-# Never used
-make_gpw = function(locusdef,peak_genes) {
-  d = locusdef@dframe;
-
-  # Indicator vector for which genes have peaks.
-  d$peak = as.numeric(d$geneid %in% peak_genes);
-
-  # Compute length and log10 length for each gene.
-  d$length = d$end - d$start;
-
-  # For genes that exist across multiple rows, sum their lengths.
-  d = stats::aggregate(cbind(peak,length) ~ geneid,d,sum);
-  d$log10_length = log10(d$length);
-
-  # A gene could now have > 1 peak due to aggregating (above), reset it to be
-  # 1 or 0.
-  d$peak = as.integer(d$peak >= 1);
-
-  # Sort by locus length.
-  d = d[order(d$log10_length),];
-
-  return(subset(d,select=c("geneid","length","log10_length","peak")));
-}
-
 # Used in ..plot_spline_length(...)
 calc_weights_gam = function(locusdef,peak_genes,mappa=NULL,...) {
   d = locusdef@dframe;
