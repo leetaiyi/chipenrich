@@ -92,29 +92,6 @@ calc_spline_mappa = function(locusdef,peak_genes,mappa,...) {
   return(subset(d,select=c("geneid","length","log10_length","mappa","peak","prob_peak")));
 }
 
-# Quick function to change column names of data frame
-# (by name, not by position.)
-change_names = function(dframe,name_list) {
-  for (n in names(name_list)) {
-    names(dframe)[names(dframe)==n] = name_list[[n]];
-  }
-  dframe;
-}
-
-# Remove a file extension from a file name.
-strip_ext = function(file) {
-  s = unlist(strsplit(file,".",fixed=T));
-  s = s[1:(length(s)-1)];
-  s = paste(s,collapse=".");
-  return(s);
-}
-
-# Get a file's extension.
-get_ext = function(file) {
-  s = unlist(strsplit(file,".",fixed=T));
-  return(tail(s,1));
-}
-
 ..plot_expected_peaks = function(ppg) {
   # Gene/peak counts.
   num_genes = dim(ppg)[1];
@@ -346,41 +323,6 @@ plot_spline_mappa = function(locusdef,peak_genes,mappa) {
    return(plotobj);
 }
 
-genome_to_organism = function(genome) {
-  code = substr(as.character(genome),1,2);
-  if (code == 'mm') {
-    org = 'mmu';
-  } else if (code == 'hg') {
-    org = 'hsa';
-  } else if (code == 'rn') {
-    org = 'rno';
-  } else if (code == 'dm') {
-  	org = 'dme';
-  }
-  else {
-    org = NULL;
-  }
-
-  if (is.null(org)) {
-    stop("Error: genome requested is not supported.");
-  }
-
-  org;
-}
-
-# Checks to see if all elements of a list argument are possible.
-check_arg = function(arg,possible_values,value=F) {
-  if (!all(arg %in% possible_values)) {
-    if (value) {
-      return(arg[!arg %in% possible_values]);
-    } else {
-      return(F);
-    }
-  } else {
-    return(T);
-  }
-}
-
 read_mappa = function(file_path) {
   if (!file.exists(file_path)) {
     stop("Error: could not find mappability file: ",file_path);
@@ -429,13 +371,6 @@ filter_genesets = function(x,max_geneset_size = 2000) {
   x@set.gene = as.environment(g);
 
   return(x);
-}
-
-# Recodes # of peaks to be:
-# { 0, if no peaks
-# { 1, if number of peaks is >= threshold argument
-recode_peaks = function(num_peaks,threshold=1) {
-  as.numeric(num_peaks >= threshold);
 }
 
 # Creates a LocusDefinition object given a flat file of definitions.
