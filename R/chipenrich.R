@@ -1,15 +1,15 @@
 #!/usr/bin/env Rscript
 os = Sys.info()[1]
-library(chipenrich.data);
-library(mgcv);
-library(IRanges);
-library(GenomicRanges);
-library(lattice);
-library(latticeExtra);
-library(grid);
-library(stringr);
-library(rms);
-library(parallel);
+# library(chipenrich.data);
+# library(mgcv);
+# library(IRanges);
+# library(GenomicRanges);
+# library(lattice);
+# library(latticeExtra);
+# library(grid);
+# library(stringr);
+# library(rms);
+# library(parallel);
 
 chipenrich = function(
   peaks,

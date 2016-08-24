@@ -9,7 +9,6 @@
 #'
 #' @importFrom annotatr read_regions read_df
 #' @import chipenrich.data
-#' @import dplyr
 #' @importClassesFrom GenomicRanges GRanges
 #' @importMethodsFrom GenomicRanges findOverlaps
 #' @importClassesFrom GenomeInfoDb Seqinfo
