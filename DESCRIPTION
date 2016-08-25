@@ -31,7 +31,12 @@ Imports:
     S4Vectors,
     stringr (>= 0.6)
 Suggests:
-    testthat
+	BiocStyle,
+	devtools,
+	knitr,
+	rmarkdown,
+	roxygen2,
+	testthat
 Depends:
     R (>= 3.1.0)
 LazyLoad: yes
@@ -43,6 +48,7 @@ Author: Ryan P. Welch [aut, cre, cph],
 Maintainer: Raymond G. Cavalcante <rcavalca@umich.edu>, Chee Lee
     <cheelee@umich.edu>
 RoxygenNote: 5.0.1
+VignetteBuilder: knitr
 Collate:
     'assign_peaks.R'
     'supported.R'

@@ -163,7 +163,7 @@ such as the length of genes, and the mappability of the sequence surrounding gen
 # testing all Biocarta and Panther pathways
 data(peaks_E2F4, package = 'chipenrich.data')
 results = chipenrich(peaks_E2F4, method='chipenrich', locusdef='nearest_tss',
-				genesets=c('biocarta_pathway'), out_name=NULL)
+			genesets=c('kegg_pathway'), out_name=NULL, max_geneset_size = 20)
 
 # Get the list of peaks that were assigned to genes.
 assigned_peaks = results$peaks

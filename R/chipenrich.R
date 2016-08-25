@@ -142,7 +142,7 @@ os = Sys.info()[1]
 #' # testing all Biocarta and Panther pathways
 #' data(peaks_E2F4, package = 'chipenrich.data')
 #' results = chipenrich(peaks_E2F4, method='chipenrich', locusdef='nearest_tss',
-#' 				genesets=c('biocarta_pathway'), out_name=NULL)
+#' 			genesets=c('kegg_pathway'), out_name=NULL, max_geneset_size = 20)
 #'
 #' # Get the list of peaks that were assigned to genes.
 #' assigned_peaks = results$peaks
@@ -209,24 +209,6 @@ chipenrich = function(
 	# CHECK OS and give multicore warning if Windows
 	if(os == 'Windows') {
 		message('Warning! Multicore enrichment is not supported on Windows.')
-	}
-
-	# Warn user if they are trying to use FET with a
-	# locus definition that might lead to biased results.
-	if (method == "fet") {
-		if (is.character(locusdef) && !locusdef %in% c("1kb","5kb")) {
-			message("Warning: Fisher's exact test should only be used with the 1kb or 5kb locus definition.")
-		}
-
-		if (user_defined_ldef) {
-			message("Warning: Fisher's exact test may give biased results if the spline fit for the gene locus definitions is not flat (see QC plots.)")
-		}
-	}
-
-	# Warn user if they are using the binomial test.
-	if (method == "binomial") {
-		message("Warning: the binomial test is provided for comparison purposes only.")
-		message("This test will almost always give biased results favoring gene sets with short average locus length.")
 	}
 
 	############################################################################
@@ -378,6 +360,25 @@ chipenrich = function(
 
 	# Test name.
 	method_name = METHOD_NAMES[[method]]
+
+	############################################################################
+	# Warn user if they are trying to use FET with a
+	# locus definition that might lead to biased results.
+	if (method == "fet") {
+		if (is.character(locusdef) && !locusdef %in% c("1kb","5kb")) {
+			message("Warning: Fisher's exact test should only be used with the 1kb or 5kb locus definition.")
+		}
+
+		if (user_defined_ldef) {
+			message("Warning: Fisher's exact test may give biased results if the spline fit for the gene locus definitions is not flat (see QC plots.)")
+		}
+	}
+
+	# Warn user if they are using the binomial test.
+	if (method == "binomial") {
+		message("Warning: the binomial test is provided for comparison purposes only.")
+		message("This test will almost always give biased results favoring gene sets with short average locus length.")
+	}
 
 	############################################################################
 	############################################################################
