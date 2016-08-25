@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <h1><span class="header-section-number">2</span> Synopsis</h1>
 <p>After starting R, the package should be loaded using the following:</p>
 <pre class="r"><code>library(chipenrich)</code></pre>
+<pre><code>## Loading chipenrich</code></pre>
 <p>This will load <code>chipenrich</code>, the <code>chipenrich.data</code> package, and necessary dependencies. The main function for conducting all gene set enrichment testing is <code>chipenrich()</code>, whose defaults are:</p>
 <pre class="r"><code>chipenrich(peaks, out_name = &quot;chipenrich&quot;, out_path = getwd(),
   genome = &quot;hg19&quot;, genesets = c(&quot;GOBP&quot;, &quot;GOCC&quot;, &quot;GOMF&quot;),
@@ -197,104 +198,87 @@ H3K4me3 gene coverage
 <h2><span class="header-section-number">5.1</span> ChIP-Enrich</h2>
 <p>There are many combinations of methods, genesets, and mappabiity settings that may be used to do gene set enrichment testing using <code>chipenrich</code>. In the following, we include some examples of gene set enrichment testing using the <code>peaks_E2F4</code> and <code>peaks_H3K4me3_GM12878</code> example datasets. <strong>Note:</strong> Analysis using multiple cores (<code>n_cores</code>) is not available on Windows.</p>
 <pre class="r"><code># Without mappability
-results = chipenrich(peaks = peaks_E2F4, genesets = &quot;kegg_pathway&quot;,
-    locusdef = &quot;nearest_tss&quot;, max_geneset_size = 20, qc_plots = F,
-    out_name = NULL, n_cores = 1)</code></pre>
+gs_path = system.file('extdata','vignette_genesets.txt', package='chipenrich')
+results = chipenrich(peaks = peaks_E2F4, genesets = gs_path,
+    locusdef = &quot;nearest_tss&quot;, qc_plots = F, out_name = NULL, n_cores = 1)</code></pre>
+<pre><code>## User-specified geneset(s)...</code></pre>
+<pre><code>## Reading user-specified gene set definitions: /Users/rcavalca/Projects/chipenrich/inst/extdata/vignette_genesets.txt</code></pre>
 <pre><code>## Assigning peaks to genes with assign_peaks(...) ..</code></pre>
 <pre><code>## Successfully assigned peaks..</code></pre>
 <pre><code>## Test: ChIP-Enrich</code></pre>
-<pre><code>## Genesets: KEGG Pathway</code></pre>
+<pre><code>## Genesets: user-supplied</code></pre>
 <pre><code>## Running tests..</code></pre>
 <pre class="r"><code>results.ce = results$results
 print(results.ce[1:5,1:5])</code></pre>
-<pre><code>##          Geneset.Type    Geneset.ID                            Description
-## goterm18 KEGG Pathway path:hsa00670              One carbon pool by folate
-## goterm19 KEGG Pathway path:hsa00750                  Vitamin B6 metabolism
-## goterm11 KEGG Pathway path:hsa00533           Keratan sulfate biosynthesis
-## goterm7  KEGG Pathway path:hsa00471 D-Glutamine and D-glutamate metabolism
-## goterm10 KEGG Pathway path:hsa00531          Glycosaminoglycan degradation
-##             P.value       FDR
-## goterm18 0.01019280 0.2955913
-## goterm19 0.06549325 0.7886090
-## goterm11 0.25631366 0.7886090
-## goterm7  0.27310399 0.7886090
-## goterm10 0.27907174 0.7886090</code></pre>
+<pre><code>##           Geneset.Type Geneset.ID Description      P.value         FDR
+## goterm4  user-supplied GO:0007346  GO:0007346 0.0002564507 0.002137089
+## goterm15 user-supplied GO:0034660  GO:0034660 0.0006357983 0.003965872
+## goterm13 user-supplied GO:0031400  GO:0031400 0.0011989631 0.004995680
+## goterm8  user-supplied GO:0009314  GO:0009314 0.0248843634 0.066489775
+## goterm17 user-supplied GO:0043623  GO:0043623 0.0265959099 0.066489775</code></pre>
 <pre class="r"><code># With mappability
-results = chipenrich(peaks = peaks_E2F4,genesets = &quot;kegg_pathway&quot;,
-    locusdef = &quot;nearest_tss&quot;, max_geneset_size = 20, use_mappability=T,
-    read_length=24, qc_plots = F, out_name = NULL,n_cores=1)</code></pre>
+results = chipenrich(peaks = peaks_E2F4, genesets = gs_path,
+    locusdef = &quot;nearest_tss&quot;, use_mappability=T, read_length=24, qc_plots = F,
+    out_name = NULL,n_cores=1)</code></pre>
+<pre><code>## User-specified geneset(s)...</code></pre>
+<pre><code>## Reading user-specified gene set definitions: /Users/rcavalca/Projects/chipenrich/inst/extdata/vignette_genesets.txt</code></pre>
 <pre><code>## Assigning peaks to genes with assign_peaks(...) ..</code></pre>
 <pre><code>## Successfully assigned peaks..</code></pre>
 <pre><code>## Mappability adjustment is enabled..</code></pre>
 <pre><code>## Test: ChIP-Enrich</code></pre>
-<pre><code>## Genesets: KEGG Pathway</code></pre>
+<pre><code>## Genesets: user-supplied</code></pre>
 <pre><code>## Running tests..</code></pre>
 <pre class="r"><code>results.cem = results$results
 print(results.cem[1:5,1:5])</code></pre>
-<pre><code>##          Geneset.Type    Geneset.ID                            Description
-## goterm18 KEGG Pathway path:hsa00670              One carbon pool by folate
-## goterm19 KEGG Pathway path:hsa00750                  Vitamin B6 metabolism
-## goterm10 KEGG Pathway path:hsa00531          Glycosaminoglycan degradation
-## goterm11 KEGG Pathway path:hsa00533           Keratan sulfate biosynthesis
-## goterm7  KEGG Pathway path:hsa00471 D-Glutamine and D-glutamate metabolism
-##             P.value       FDR
-## goterm18 0.01175408 0.3408682
-## goterm19 0.07976549 0.8000610
-## goterm10 0.21928285 0.8000610
-## goterm11 0.27693026 0.8000610
-## goterm7  0.28629424 0.8000610</code></pre>
+<pre><code>##           Geneset.Type Geneset.ID Description      P.value         FDR
+## goterm4  user-supplied GO:0007346  GO:0007346 0.0002461381 0.002051151
+## goterm15 user-supplied GO:0034660  GO:0034660 0.0005956791 0.002978396
+## goterm13 user-supplied GO:0031400  GO:0031400 0.0010079587 0.004199828
+## goterm8  user-supplied GO:0009314  GO:0009314 0.0252568651 0.063801409
+## goterm17 user-supplied GO:0043623  GO:0043623 0.0255205637 0.063801409</code></pre>
 </div>
 <div id="broad-enrich" class="section level2">
 <h2><span class="header-section-number">5.2</span> Broad-Enrich</h2>
-<pre class="r"><code>results = chipenrich(peaks = peaks_H3K4me3_GM12878, genesets = &quot;kegg_pathway&quot;,
-    method='broadenrich', locusdef = &quot;nearest_tss&quot;, max_geneset_size = 20,
-    qc_plots = F, out_name = NULL, n_cores=1)</code></pre>
+<pre class="r"><code>results = chipenrich(peaks = peaks_H3K4me3_GM12878, genesets = gs_path,
+    method='broadenrich', locusdef = &quot;nearest_tss&quot;, qc_plots = F,
+    out_name = NULL, n_cores=1)</code></pre>
+<pre><code>## User-specified geneset(s)...</code></pre>
+<pre><code>## Reading user-specified gene set definitions: /Users/rcavalca/Projects/chipenrich/inst/extdata/vignette_genesets.txt</code></pre>
 <pre><code>## Assigning peaks to genes with assigned_peak_segments(...) ..</code></pre>
 <pre><code>## Successfully assigned peaks..</code></pre>
 <pre><code>## Calculating peak overlaps with gene loci..</code></pre>
 <pre><code>## Test: Broad-Enrich</code></pre>
-<pre><code>## Genesets: KEGG Pathway</code></pre>
+<pre><code>## Genesets: user-supplied</code></pre>
 <pre><code>## Running tests..</code></pre>
 <pre class="r"><code>results.be = results$results
 print(results.be[1:5,1:5])</code></pre>
-<pre><code>##         Geneset.Type    Geneset.ID
-## ratio11 KEGG Pathway path:hsa00533
-## ratio16 KEGG Pathway path:hsa00604
-## ratio23 KEGG Pathway path:hsa01040
-## ratio26 KEGG Pathway path:hsa05020
-## ratio8  KEGG Pathway path:hsa00511
-##                                            Description   P.value       FDR
-## ratio11                   Keratan sulfate biosynthesis 0.0633085 0.4066302
-## ratio16 Glycosphingolipid biosynthesis - ganglioseries 0.1221133 0.4426606
-## ratio23        Polyunsaturated fatty acid biosynthesis 0.3077809 0.5697920
-## ratio26                            Parkinson's disease 0.3185592 0.5697920
-## ratio8                            N-Glycan degradation 0.3239700 0.5697920</code></pre>
+<pre><code>##          Geneset.Type Geneset.ID Description      P.value          FDR
+## ratio1  user-supplied GO:0002521  GO:0002521 8.429189e-06 7.024324e-05
+## ratio13 user-supplied GO:0031400  GO:0031400 6.889605e-05 4.306003e-04
+## ratio11 user-supplied GO:0022411  GO:0022411 9.688040e-05 4.844020e-04
+## ratio24 user-supplied GO:0071845  GO:0071845 3.306671e-04 1.077648e-03
+## ratio12 user-supplied GO:0022604  GO:0022604 3.001898e-03 7.504746e-03</code></pre>
 </div>
 <div id="fishers-exact-test" class="section level2">
 <h2><span class="header-section-number">5.3</span> Fisher’s Exact Test</h2>
 <p>Fisher’s Exact test assumes that each gene is equally likely to have a peak. We recommend using Fisher’s exact test with the <code>1kb</code> or <code>5kb</code> locus definitions only. This will force all genes to have approximately the same locus length and avoid returning bias results.</p>
-<pre class="r"><code>results = chipenrich(peaks = peaks_E2F4, genesets = c(&quot;kegg_pathway&quot;),
-    locusdef = &quot;5kb&quot;, method = &quot;fet&quot;, fisher_alt = &quot;two.sided&quot;,
-    max_geneset_size = 20, qc_plots = F, out_name = NULL)</code></pre>
+<pre class="r"><code>results = chipenrich(peaks = peaks_E2F4, genesets = gs_path, locusdef = &quot;5kb&quot;,
+    method = &quot;fet&quot;, fisher_alt = &quot;two.sided&quot;, qc_plots = F, out_name = NULL)</code></pre>
+<pre><code>## User-specified geneset(s)...</code></pre>
+<pre><code>## Reading user-specified gene set definitions: /Users/rcavalca/Projects/chipenrich/inst/extdata/vignette_genesets.txt</code></pre>
 <pre><code>## Assigning peaks to genes with assign_peaks(...) ..</code></pre>
 <pre><code>## Successfully assigned peaks..</code></pre>
 <pre><code>## Test: Fisher's Exact Test</code></pre>
-<pre><code>## Genesets: KEGG Pathway</code></pre>
+<pre><code>## Genesets: user-supplied</code></pre>
 <pre><code>## Running tests..</code></pre>
 <pre class="r"><code>results.fet = results$results
 print(results.fet[1:5,1:5])</code></pre>
-<pre><code>##    Geneset.Type    Geneset.ID                            Description
-## 19 KEGG Pathway path:hsa00670              One carbon pool by folate
-## 12 KEGG Pathway path:hsa00533           Keratan sulfate biosynthesis
-## 8  KEGG Pathway path:hsa00471 D-Glutamine and D-glutamate metabolism
-## 26 KEGG Pathway path:hsa04710                       Circadian rhythm
-## 21 KEGG Pathway path:hsa00930                Caprolactam degradation
-##        P.value        FDR
-## 19 0.001914098 0.05550885
-## 12 0.068935786 0.49978445
-## 8  0.098928221 0.57378368
-## 26 0.150218983 0.63447906
-## 21 0.174274533 0.63447906</code></pre>
+<pre><code>##     Geneset.Type Geneset.ID Description      P.value          FDR
+## 5  user-supplied GO:0007346  GO:0007346 9.061557e-08 7.551297e-07
+## 14 user-supplied GO:0031400  GO:0031400 5.060515e-05 2.925808e-04
+## 16 user-supplied GO:0034660  GO:0034660 5.868945e-05 2.925808e-04
+## 9  user-supplied GO:0009314  GO:0009314 7.322057e-03 2.033905e-02
+## 18 user-supplied GO:0043623  GO:0043623 3.222912e-02 7.324800e-02</code></pre>
 </div>
 </div>
 <div id="output" class="section level1">
@@ -342,34 +326,27 @@ print(results.fet[1:5,1:5])</code></pre>
 <h2><span class="header-section-number">6.3</span> Gene set enrichment results</h2>
 <p>Gene set enrichment results are stored in <code>$results</code>. For example,</p>
 <pre class="r"><code>head(results$results)</code></pre>
-<pre><code>##    Geneset.Type    Geneset.ID                            Description
-## 19 KEGG Pathway path:hsa00670              One carbon pool by folate
-## 12 KEGG Pathway path:hsa00533           Keratan sulfate biosynthesis
-## 8  KEGG Pathway path:hsa00471 D-Glutamine and D-glutamate metabolism
-## 26 KEGG Pathway path:hsa04710                       Circadian rhythm
-## 21 KEGG Pathway path:hsa00930                Caprolactam degradation
-## 11 KEGG Pathway path:hsa00531          Glycosaminoglycan degradation
-##        P.value        FDR Odds.Ratio   Status N.Geneset.Genes
-## 19 0.001914098 0.05550885   5.212619 enriched              17
-## 12 0.068935786 0.49978445   2.665729 enriched              16
-## 8  0.098928221 0.57378368   2.198979 enriched              19
-## 26 0.150218983 0.63447906   2.556703 enriched              13
-## 21 0.174274533 0.63447906   2.129793 enriched              14
-## 11 0.196907293 0.63447906   2.054286 enriched              17
-##    N.Geneset.Peak.Genes
-## 19                   13
-## 12                   10
-## 8                    11
-## 26                    8
-## 21                    8
-## 11                    9
-##                                                                  Geneset.Peak.Genes
-## 19 6472, 4522, 4548, 10797, 25902, 123263, 471, 1719, 2356, 2618, 6470, 7298, 10588
-## 12                     2530, 6482, 6484, 6487, 9435, 2683, 4166, 8704, 11041, 93010
-## 8                2729, 4967, 2730, 2744, 3419, 2571, 2746, 3418, 3420, 27165, 55753
-## 26                                    406, 1453, 8553, 1407, 5187, 8864, 9575, 1454
-## 21                            23408, 23411, 27163, 1892, 3033, 10327, 51547, 123803
-## 11                           411, 4669, 8692, 2799, 2990, 3074, 3425, 10855, 138050</code></pre>
+<pre><code>##     Geneset.Type Geneset.ID Description      P.value          FDR
+## 5  user-supplied GO:0007346  GO:0007346 9.061557e-08 7.551297e-07
+## 14 user-supplied GO:0031400  GO:0031400 5.060515e-05 2.925808e-04
+## 16 user-supplied GO:0034660  GO:0034660 5.868945e-05 2.925808e-04
+## 9  user-supplied GO:0009314  GO:0009314 7.322057e-03 2.033905e-02
+## 18 user-supplied GO:0043623  GO:0043623 3.222912e-02 7.324800e-02
+## 23 user-supplied GO:0051129  GO:0051129 1.103298e-01 2.270812e-01
+##    Odds.Ratio   Status N.Geneset.Genes N.Geneset.Peak.Genes
+## 5    1.912619 enriched             299                  169
+## 14   1.638554 enriched             297                  158
+## 16   1.648099 enriched             281                  151
+## 9    1.392516 enriched             284                  141
+## 18   1.307770 enriched             278                  134
+## 23   1.220770 enriched             294                  137
+##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Geneset.Peak.Genes
+## 5  3265, 415116, 1026, 1029, 55159, 323, 1111, 3146, 3398, 5727, 8451, 8877, 9184, 10296, 79791, 150094, 596, 598, 675, 699, 835, 994, 995, 996, 1104, 1869, 1977, 1978, 4085, 4091, 5300, 5347, 5709, 5728, 6597, 6659, 6776, 6790, 7153, 7161, 7314, 8318, 8558, 8621, 8881, 9787, 10950, 23326, 23411, 23513, 26271, 26574, 51499, 57026, 63967, 64326, 80895, 81620, 90381, 332, 351, 472, 595, 652, 701, 890, 891, 983, 990, 991, 1017, 1027, 1063, 1263, 1540, 1613, 1877, 2290, 3275, 3364, 3481, 4193, 4582, 4609, 4751, 5037, 5048, 5311, 5424, 5569, 5586, 5682, 5684, 5686, 5690, 5698, 5702, 5704, 5707, 5708, 5711, 5713, 5714, 5715, 5717, 5718, 5883, 5902, 5925, 6233, 6777, 6886, 7013, 7040, 7175, 7272, 7311, 7316, 7321, 7324, 7480, 8379, 8697, 8883, 9088, 9099, 9183, 9491, 9585, 9587, 9700, 9735, 10201, 10213, 10393, 10459, 10783, 11065, 11130, 22974, 23087, 23137, 23476, 25906, 26013, 29117, 29882, 29945, 51203, 51379, 51433, 51529, 54443, 54623, 54962, 54998, 55023, 55055, 55367, 55726, 55743, 56475, 64682, 79027, 79577, 118611, 143471, 340152, 340533
+## 14                                                                 3725, 1026, 1029, 1849, 200734, 2729, 3480, 7128, 9184, 10221, 51422, 56940, 25, 996, 1647, 1786, 1843, 1846, 1847, 2810, 3659, 3720, 4085, 4091, 4298, 4616, 4771, 5079, 5347, 5709, 5728, 5987, 6659, 7161, 7249, 7314, 8165, 8651, 8692, 8881, 9683, 10114, 23411, 25998, 26271, 26524, 51160, 51343, 57732, 64780, 80824, 161742, 408, 409, 652, 672, 701, 836, 857, 891, 991, 1020, 1027, 1487, 1789, 1844, 1850, 1855, 2629, 2776, 2873, 2950, 3984, 4092, 4221, 4763, 5037, 5515, 5524, 5580, 5590, 5611, 5664, 5682, 5684, 5686, 5690, 5698, 5702, 5704, 5707, 5708, 5711, 5713, 5714, 5715, 5717, 5718, 5925, 5998, 6233, 6418, 6497, 6895, 7026, 7040, 7311, 7316, 7321, 7324, 7375, 7471, 7531, 8613, 8697, 9021, 9093, 9113, 9467, 9474, 9491, 9529, 9655, 10213, 10252, 10253, 10393, 10399, 10459, 10614, 10724, 11065, 11213, 11261, 23376, 23560, 23636, 26277, 26973, 29882, 29945, 51347, 51433, 51529, 51654, 51763, 54206, 54880, 55364, 58509, 58533, 64359, 64682, 64853, 80725, 116496, 171392, 374969
+## 16                                    1029, 26173, 2483, 3921, 4086, 4677, 5036, 5859, 6223, 6628, 6632, 6839, 10248, 10528, 10785, 10978, 11102, 23411, 23536, 26512, 51096, 51729, 54913, 84705, 115752, 118460, 283989, 16, 833, 1615, 1736, 1787, 2091, 2617, 3376, 3735, 4087, 5303, 5393, 5394, 5464, 6154, 6194, 6201, 6202, 6209, 6217, 6633, 6636, 6637, 6741, 6895, 6897, 7175, 7407, 8568, 8602, 9045, 9136, 9221, 9521, 9692, 9724, 9775, 10056, 10199, 10200, 10556, 10607, 10667, 10775, 10940, 11062, 11157, 11340, 22916, 23016, 23076, 23318, 23378, 23404, 23405, 23481, 25896, 25929, 25973, 27068, 27161, 27340, 29102, 50628, 51010, 51067, 51095, 51493, 51593, 51602, 51654, 51808, 54433, 54464, 54487, 54512, 54517, 55035, 55157, 55164, 55272, 55520, 55644, 55651, 55656, 55687, 55699, 56165, 56915, 57176, 57505, 60487, 60528, 64118, 64172, 79042, 79050, 79707, 79760, 80324, 80746, 80789, 81605, 81887, 81890, 83707, 84294, 90121, 90459, 91801, 92105, 92345, 96764, 113802, 115939, 116461, 118672, 123283, 126789, 134430, 142940, 150962, 317781, 348180
+## 9                                                                                                                                                                                  3265, 3725, 7528, 1026, 3726, 7398, 8243, 55159, 1111, 1432, 4968, 5936, 7056, 8553, 64782, 596, 598, 675, 777, 993, 1153, 1407, 1647, 1843, 1958, 2073, 3383, 4734, 5187, 5810, 5970, 6794, 7161, 8493, 8692, 9575, 10206, 10277, 22976, 23411, 25788, 25836, 51720, 51776, 55075, 57646, 57654, 64859, 79840, 83759, 84142, 84236, 90381, 120227, 351, 388, 472, 545, 595, 641, 672, 836, 839, 840, 857, 1020, 1032, 1263, 1281, 1396, 1643, 1789, 1894, 2063, 2177, 2189, 2235, 2237, 2353, 2547, 2903, 2956, 3014, 3091, 3198, 3364, 3593, 3815, 4144, 4157, 4221, 4255, 4436, 4609, 4763, 4867, 4893, 5153, 5366, 5424, 5591, 5599, 5796, 5883, 6310, 7040, 7159, 7222, 7391, 7516, 7518, 8438, 8533, 8600, 9021, 9025, 9212, 9600, 10276, 10413, 11073, 11284, 23596, 25896, 51150, 51455, 51514, 54962, 56852, 58493, 60626, 63943, 64421, 79035, 83695, 84268, 118611, 121457, 165918, 221927, 261734
+## 18                                                                                                                                                                                        9659, 10383, 6047, 137682, 382, 4214, 6709, 6904, 10376, 11078, 811, 830, 1058, 2241, 2288, 3092, 3320, 3329, 3717, 4086, 4091, 4690, 4928, 5494, 5581, 5747, 5879, 5962, 6711, 6812, 7186, 8195, 8775, 8867, 9997, 10059, 10435, 10959, 25909, 25915, 26054, 26271, 27338, 55172, 57580, 79003, 133746, 203068, 347733, 118, 395, 466, 857, 1027, 1060, 1062, 1063, 1175, 1352, 1729, 1730, 2475, 3084, 3308, 4087, 4292, 5018, 5063, 5580, 5711, 5715, 5756, 5921, 6249, 6341, 6729, 6950, 7013, 7019, 7040, 7273, 7283, 8440, 8624, 8932, 8936, 9113, 9131, 9168, 9212, 9493, 10092, 10095, 10109, 10273, 10381, 10552, 10576, 10972, 11047, 11065, 11344, 22919, 23126, 23149, 23165, 23189, 27175, 29078, 29127, 51371, 54443, 54968, 55154, 55706, 55835, 57180, 57505, 57606, 63971, 79133, 80152, 81873, 84790, 115548, 123872, 163126, 166379, 203547, 285521, 286527, 374291, 387103, 644096
+## 23                                                                                                                                                                                                              2672, 382, 396, 1111, 3146, 4214, 5525, 6709, 6904, 8543, 9184, 11078, 22902, 23493, 53335, 598, 664, 699, 830, 996, 1786, 1901, 1902, 1978, 2288, 2932, 3196, 3720, 4085, 4091, 5079, 5494, 5728, 5747, 5879, 5962, 6711, 6772, 7533, 8881, 11252, 23332, 26271, 26586, 51185, 118, 335, 341, 387, 395, 472, 652, 672, 701, 891, 899, 991, 1063, 1265, 1487, 1789, 2043, 2395, 3066, 3956, 4070, 4092, 4135, 4804, 4869, 4976, 5048, 5515, 5580, 5587, 5590, 5734, 5756, 5894, 6259, 6311, 6418, 6419, 6497, 6695, 7013, 7014, 7040, 7175, 7267, 7272, 7321, 7324, 7473, 8379, 8408, 8697, 9138, 9139, 9168, 9700, 9711, 9856, 10062, 10201, 10393, 10399, 10459, 11065, 11104, 11213, 11344, 22919, 23063, 23122, 23189, 25906, 26277, 26278, 29882, 29945, 51433, 51529, 51763, 54386, 54880, 54998, 55755, 57142, 64682, 65057, 65078, 80312, 116985, 120892, 192683, 286527</code></pre>
 </div>
 </div>
 <div id="references" class="section level1">

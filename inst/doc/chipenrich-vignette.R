@@ -2,7 +2,7 @@
 #  library(chipenrich)
 
 ## ---- echo=FALSE---------------------------------------------------------
-suppressWarnings(suppressMessages(suppressPackageStartupMessages(devtools::load_all())))
+suppressPackageStartupMessages(devtools::load_all())
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  chipenrich(peaks, out_name = "chipenrich", out_path = getwd(),
@@ -47,31 +47,30 @@ plot_gene_coverage(peaks = peaks_H3K4me3_GM12878, locusdef = 'nearest_tss',  gen
 
 ## ------------------------------------------------------------------------
 # Without mappability
-results = chipenrich(peaks = peaks_E2F4, genesets = "kegg_pathway",
-	locusdef = "nearest_tss", max_geneset_size = 20, qc_plots = F,
-	out_name = NULL, n_cores = 1)
+gs_path = system.file('extdata','vignette_genesets.txt', package='chipenrich')
+results = chipenrich(peaks = peaks_E2F4, genesets = gs_path,
+	locusdef = "nearest_tss", qc_plots = F, out_name = NULL, n_cores = 1)
 results.ce = results$results
 print(results.ce[1:5,1:5])
 
 ## ------------------------------------------------------------------------
 # With mappability
-results = chipenrich(peaks = peaks_E2F4,genesets = "kegg_pathway",
-	locusdef = "nearest_tss", max_geneset_size = 20, use_mappability=T,
-	read_length=24, qc_plots = F, out_name = NULL,n_cores=1)
+results = chipenrich(peaks = peaks_E2F4, genesets = gs_path,
+	locusdef = "nearest_tss", use_mappability=T, read_length=24, qc_plots = F,
+	out_name = NULL,n_cores=1)
 results.cem = results$results
 print(results.cem[1:5,1:5])
 
 ## ------------------------------------------------------------------------
-results = chipenrich(peaks = peaks_H3K4me3_GM12878, genesets = "kegg_pathway",
-	method='broadenrich', locusdef = "nearest_tss", max_geneset_size = 20,
-	qc_plots = F, out_name = NULL, n_cores=1)
+results = chipenrich(peaks = peaks_H3K4me3_GM12878, genesets = gs_path,
+	method='broadenrich', locusdef = "nearest_tss", qc_plots = F,
+	out_name = NULL, n_cores=1)
 results.be = results$results
 print(results.be[1:5,1:5])
 
 ## ------------------------------------------------------------------------
-results = chipenrich(peaks = peaks_E2F4, genesets = c("kegg_pathway"),
-	locusdef = "5kb", method = "fet", fisher_alt = "two.sided",
-	max_geneset_size = 20, qc_plots = F, out_name = NULL)
+results = chipenrich(peaks = peaks_E2F4, genesets = gs_path, locusdef = "5kb",
+	method = "fet", fisher_alt = "two.sided", qc_plots = F, out_name = NULL)
 results.fet = results$results
 print(results.fet[1:5,1:5])
 
