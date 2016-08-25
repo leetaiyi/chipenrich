@@ -18,7 +18,8 @@
 #' @import latticeExtra
 #' @import methods
 #' @import mgcv
-#' @importFrom readr read_tsv
+#' @import parallel
+#' @import plyr
 #' @import rms
 #' @importFrom S4Vectors queryHits subjectHits
 #' @importFrom stats as.formula

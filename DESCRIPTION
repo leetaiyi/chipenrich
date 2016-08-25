@@ -4,11 +4,11 @@ Title: Gene Set Enrichment For ChIP-seq Peak Data
 Version: 1.11.3
 Date: 2016-05-30
 Authors@R: c(
-  person(c("Ryan","P."),"Welch",role = c("aut","cph"),email = "welchr@umich.edu"),
-  person("Chee","Lee",role = c("aut","cre"),email = "cheelee@umich.edu"),
-  person(c("Raymond","G."),"Cavalcante",role = c("aut","cre"),email = "rcavalca@umich.edu"),
-  person(c("Laura","J."),"Scott",role = c("ths"), email = "ljst@umich.edu"),
-  person(c("Maureen","A."),"Sartor",role = c("ths"),email = "sartorma@med.umich.edu"))
+	person(c("Ryan","P."),"Welch",role = c("aut","cph"),email = "welchr@umich.edu"),
+	person("Chee","Lee",role = c("aut","cre"),email = "cheelee@umich.edu"),
+	person(c("Raymond","G."),"Cavalcante",role = c("aut","cre"),email = "rcavalca@umich.edu"),
+	person(c("Laura","J."),"Scott",role = c("ths"), email = "ljst@umich.edu"),
+	person(c("Maureen","A."),"Sartor",role = c("ths"),email = "sartorma@med.umich.edu"))
 Description: ChIP-Enrich performs gene set enrichment testing
     using peaks called from a ChIP-seq experiment. The method empirically
     corrects for confounding factors such as the length of genes,
@@ -17,21 +17,23 @@ biocViews: Software, Bioinformatics, Enrichment, GeneSetEnrichment
 License: GPL-3
 Imports:
     chipenrich.data,
-    methods,
+    GenomeInfoDb,
     GenomicRanges (>= 1.10.0),
+    grid,
     IRanges (>= 1.16.0),
-    mgcv,
-    plyr (>= 1.7.0),
     lattice,
     latticeExtra,
-    grid,
-    stringr (>= 0.6),
-    rms
+    methods,
+    mgcv,
+	parallel,
+    plyr (>= 1.7.0),
+    rms,
+    S4Vectors,
+    stringr (>= 0.6)
 Suggests:
     testthat
 Depends:
-    R (>= 2.15.1)
-Enhances: parallel
+    R (>= 3.1.0)
 LazyLoad: yes
 Author: Ryan P. Welch [aut, cre, cph],
     Chee Lee [aut, cre],
@@ -41,3 +43,23 @@ Author: Ryan P. Welch [aut, cre, cph],
 Maintainer: Raymond G. Cavalcante <rcavalca@umich.edu>, Chee Lee
     <cheelee@umich.edu>
 RoxygenNote: 5.0.1
+Collate:
+    'assign_peaks.R'
+    'supported.R'
+    'utils.R'
+    'constants.R'
+    'chipenrich.R'
+    'chipenrich_package_doc.R'
+    'peaks_per_gene.R'
+    'plot_dist_to_tss.R'
+    'plot_expected_peaks.R'
+    'plot_gene_coverage.R'
+    'plot_spline_length.R'
+    'plot_spline_mappa.R'
+    'randomize.R'
+    'read.R'
+    'setup.R'
+    'test_approx.R'
+    'test_binomial.R'
+    'test_fisher.R'
+    'test_gam.R'

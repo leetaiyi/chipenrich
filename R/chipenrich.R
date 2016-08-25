@@ -10,7 +10,7 @@ os = Sys.info()[1]
 # library(stringr)
 # library(rms)
 # library(parallel)
-
+#' @include constants.R utils.R supported.R
 chipenrich = function(
 	peaks,
 	out_name = "chipenrich",
