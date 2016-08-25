@@ -61,6 +61,7 @@ read_bed = function(file_path) {
 
 	# Reduce peaks
 	gr = GenomicRanges::reduce(gr)
+	gr$name = paste('peak:', 1:length(gr), sep='')
 
 	return(gr)
 }
@@ -125,6 +126,7 @@ read_bedgff = function(file_path) {
 
 	# Reduce peaks
 	gr = GenomicRanges::reduce(gr)
+	gr$name = paste('peak:', 1:length(gr), sep='')
 
 	return(gr)
 }
@@ -162,6 +164,7 @@ load_peaks = function(dframe) {
 
 	# Reduce peaks
 	gr = GenomicRanges::reduce(gr)
+	gr$name = paste('peak:', 1:length(gr), sep='')
 
 	return(gr)
 }
