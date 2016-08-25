@@ -12,6 +12,7 @@
 #' @importMethodsFrom GenomicRanges findOverlaps
 #' @importClassesFrom GenomeInfoDb Seqinfo
 #' @importFrom GenomeInfoDb seqinfo
+#' @importFrom grDevices dev.off pdf
 #' @import grid
 #' @importFrom IRanges IRanges
 #' @import lattice
@@ -22,7 +23,7 @@
 #' @import plyr
 #' @import rms
 #' @importFrom S4Vectors queryHits subjectHits
-#' @importFrom stats as.formula
+#' @importFrom stats as.formula binom.test coef complete.cases fisher.test fitted na.omit p.adjust pchisq qpois quantile resid
 #' @import stringr
-#' @importFrom utils data
+#' @importFrom utils data read.table tail write.table
 NULL

@@ -86,7 +86,7 @@ read_bed = function(file_path) {
 #'
 #' # Example of gzipped GFF3
 #' file = system.file('extdata', 'test.gff3.gz', package = 'chipenrich')
-#' peaks = read_bed(file)
+#' peaks = read_bedgff(file)
 #'
 #' @export
 read_bedgff = function(file_path) {

@@ -28,7 +28,7 @@ peaks = read_bedgff(file)
 
 # Example of gzipped GFF3
 file = system.file('extdata', 'test.gff3.gz', package = 'chipenrich')
-peaks = read_bed(file)
+peaks = read_bedgff(file)
 
 }
 

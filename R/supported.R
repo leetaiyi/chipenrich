@@ -1,3 +1,12 @@
+#' Display supported locus definitions
+#'
+#' @return A vector indicating the supported locus definitions.
+#'
+#' @examples
+#'
+#' supported_locusdefs()
+#'
+#' @export
 supported_locusdefs = function() {
   piqr = data(package = "chipenrich.data");
   data_files = piqr$results[,3];
@@ -6,6 +15,15 @@ supported_locusdefs = function() {
   unique(str_replace(ldefs,"locusdef\\.(.+?)\\.",""));
 }
 
+#' Display supported read lengths for mappability
+#'
+#' @return A vector indicating supported mappability read lengths.
+#'
+#' @examples
+#'
+#' supported_read_lengths()
+#'
+#' @export
 supported_read_lengths = function() {
   piqr = data(package = "chipenrich.data");
   data_files = piqr$results[,3];
@@ -14,6 +32,15 @@ supported_read_lengths = function() {
   sort(unique(as.numeric(str_replace(str_extract(mappas,"(\\d+)mer"),"mer",""))));
 }
 
+#' Display supported genesets for gene set enrichment.
+#'
+#' @return A vector indicating supported gene sets for enrichment.
+#'
+#' @examples
+#'
+#' supported_genesets()
+#'
+#' @export
 supported_genesets = function() {
   piqr = data(package = "chipenrich.data");
   data_files = piqr$results[,3];
@@ -22,6 +49,15 @@ supported_genesets = function() {
   unlist(unique(Map(function(x) x[[2]],str_split(geneset_files,"\\."))));
 }
 
+#' Display supported genomes.
+#'
+#' @return A vector indicating supported genomes.
+#'
+#' @examples
+#'
+#' supported_genomes()
+#'
+#' @export
 supported_genomes = function() {
   piqr = data(package = "chipenrich.data");
   data_files = piqr$results[,3];
@@ -29,6 +65,15 @@ supported_genomes = function() {
   as.character(na.omit(unique(str_match(data_files,"(locusdef|mappa)\\.(\\w+)\\.")[,3])));
 }
 
+#' Display supported gene set enrichment methods.
+#'
+#' @return A vector indicating supported methods for gene set enrichment.
+#'
+#' @examples
+#'
+#' supported_methods()
+#'
+#' @export
 supported_methods = function() {
   return(names(SUPPORTED_METHODS));
 }
