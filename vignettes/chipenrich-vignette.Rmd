@@ -18,12 +18,8 @@ This document describes how to use `chipenrich` to analyze results from ChIP-Seq
 
 After starting R, the package should be loaded using the following:
 
-```{r, eval=FALSE}
+```{r}
 library(chipenrich)
-```
-
-```{r, echo=FALSE}
-suppressPackageStartupMessages(devtools::load_all())
 ```
 
 This will load `chipenrich`, the `chipenrich.data` package, and necessary dependencies. The main function for conducting all gene set enrichment testing is `chipenrich()`, whose defaults are:

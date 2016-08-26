@@ -5,7 +5,7 @@ Version: 1.11.3
 Date: 2016-05-30
 Authors@R: c(
 	person(c("Ryan","P."),"Welch",role = c("aut","cph"),email = "welchr@umich.edu"),
-	person("Chee","Lee",role = c("aut","cre"),email = "cheelee@umich.edu"),
+	person("Chee","Lee",role = c("aut"),email = "cheelee@umich.edu"),
 	person(c("Raymond","G."),"Cavalcante",role = c("aut","cre"),email = "rcavalca@umich.edu"),
 	person(c("Laura","J."),"Scott",role = c("ths"), email = "ljst@umich.edu"),
 	person(c("Maureen","A."),"Sartor",role = c("ths"),email = "sartorma@med.umich.edu"))
@@ -40,13 +40,7 @@ Suggests:
 Depends:
     R (>= 3.1.0)
 LazyLoad: yes
-Author: Ryan P. Welch [aut, cre, cph],
-    Chee Lee [aut, cre],
-    Raymond G. Cavalcante [aut, cre],
-    Laura J. Scott [ths],
-    Maureen A. Sartor [ths]
-Maintainer: Raymond G. Cavalcante <rcavalca@umich.edu>, Chee Lee
-    <cheelee@umich.edu>
+Maintainer: Raymond G. Cavalcante <rcavalca@umich.edu>
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
 Collate:

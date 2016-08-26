@@ -1,8 +1,5 @@
-## ---- eval=FALSE---------------------------------------------------------
-#  library(chipenrich)
-
-## ---- echo=FALSE---------------------------------------------------------
-suppressPackageStartupMessages(devtools::load_all())
+## ------------------------------------------------------------------------
+library(chipenrich)
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  chipenrich(peaks, out_name = "chipenrich", out_path = getwd(),
@@ -17,6 +14,10 @@ data(peaks_E2F4, package = 'chipenrich.data')
 data(peaks_H3K4me3_GM12878, package = 'chipenrich.data')
 
 head(peaks_E2F4)
+
+## ---- echo=FALSE---------------------------------------------------------
+peaks_E2F4 = subset(peaks_E2F4, peaks_E2F4$chrom == 'chr1')
+peaks_H3K4me3_GM12878 = subset(peaks_H3K4me3_GM12878, peaks_H3K4me3_GM12878$chrom == 'chr1')
 
 ## ------------------------------------------------------------------------
 supported_genomes()
