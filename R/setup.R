@@ -172,6 +172,7 @@ setup_geneset = function(filepath) {
     object@all.genes = as.character(sort(Reduce(function(x,y) union(x,y),object@set.gene)))
 
     object@set.name = as.environment(gs.names.list)
+	message('Done setting up user-specified geneset..')
 
     return(object)
 }

@@ -46,6 +46,11 @@ data(peaks_H3K4me3_GM12878, package = 'chipenrich.data')
 head(peaks_E2F4)
 ```
 
+```{r, echo=FALSE}
+peaks_E2F4 = subset(peaks_E2F4, peaks_E2F4$chrom == 'chr1')
+peaks_H3K4me3_GM12878 = subset(peaks_H3K4me3_GM12878, peaks_H3K4me3_GM12878$chrom == 'chr1')
+```
+
 The first task of `chipenrich()` is to assign the peaks to genes. Currently supported genomes are listed below, with `supported_genomes()`. Data from older genome versions may be converted using UCSC's liftover tool: http://genome.ucsc.edu/cgi-bin/hgLiftOver.
 
 ```{r}

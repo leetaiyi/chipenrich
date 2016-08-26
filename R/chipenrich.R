@@ -177,7 +177,7 @@ chipenrich = function(
 	############################################################################
 	# Collect options for opts output
 	l = unlist(as.list(environment()))
-		opts = data.frame(
+	opts = data.frame(
 		args = names(l),
 		values = sapply(unlist(l),paste,collapse=","),
 		stringsAsFactors = F
@@ -390,6 +390,7 @@ chipenrich = function(
 	######################################################
 	# Read in and format peaks (from data.frame or file)
 	if (class(peaks) == "data.frame") {
+		message('Reading peaks from data.frame..')
 		peakobj = load_peaks(peaks)
 	} else if (class(peaks) == "character") {
 		if (str_sub(peaks,-4,-1) == ".gff" || str_sub(peaks,-5,-1) == '.gff3' || str_sub(peaks,-7,-1) == ".gff.gz" || str_sub(peaks,-8,-1) == '.gff3.gz') {
@@ -432,7 +433,7 @@ chipenrich = function(
 	# when using assign_peaks() and assign_peak_segments()
 	column_order = c(
 		"peak_id",
-		"chrom",
+		"chr",
 		"peak_start",
 		"peak_end",
 		"peak_midpoint",

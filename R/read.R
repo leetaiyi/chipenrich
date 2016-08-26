@@ -158,11 +158,15 @@ load_peaks = function(dframe) {
 	}
 
 	# Convert to list of GenomicRanges
+	message('Constructing GRanges')
 	gr = GenomicRanges::GRanges(
 		seqnames = dframe$chrom,
 		ranges = IRanges::IRanges(start = dframe$start, end = dframe$end))
 
 	# Reduce peaks
+	message('Sorting GRanges')
+	gr = GenomicRanges::sort(gr)
+	message('Reducing GRanges')
 	gr = GenomicRanges::reduce(gr)
 	gr$name = paste('peak:', 1:length(gr), sep='')
 
