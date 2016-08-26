@@ -10,7 +10,7 @@ randomize_locusdef = function(ldef, resolution=50) {
 	ldef_chrom = lapply(ldef_chrom, function(lc) {
 		chrom = unique(lc$chrom)
 
-		message(paste('	On chrom',chrom))
+		message(paste('	On chrom', chrom))
 
 		# Collapse consecutive rows of the ldef when the geneid is the same
 			# Split by geneid
@@ -22,7 +22,7 @@ randomize_locusdef = function(ldef, resolution=50) {
 			lc_geneid_ir = lapply(lc_geneid, function(lcg) {
 				geneid = unique(lcg$geneid)
 
-				ir = IRanges(start=lcg$start, end = lcg$end, names=lcg$geneid)
+				ir = IRanges::IRanges(start=lcg$start, end = lcg$end, names=lcg$geneid)
 				ir = IRanges::reduce(ir)
 				names(ir) = rep.int(geneid, length(ir))
 
@@ -66,9 +66,9 @@ randomize_locusdef = function(ldef, resolution=50) {
 	ldef_df = Reduce(rbind, ldef_chrom)
 
 	message('Creating new GenomicRanges object..')
-	ldef_gr = GRanges(
+	ldef_gr = GenomicRanges::GRanges(
 		seqnames = ldef_df$chrom,
-		ranges = IRanges(start=ldef_df$start, end=ldef_df$end),
+		ranges = IRanges::IRanges(start=ldef_df$start, end=ldef_df$end),
 		names = ldef_df$geneid
 	)
 
@@ -79,9 +79,9 @@ randomize_locusdef = function(ldef, resolution=50) {
 	names(chr_list) = chroms
 
 	ldef_ir = lapply(chr_list, function(chr) {
-		sub_ldef_df = subset(ldef_df, chrom==chr)
+		sub_ldef_df = subset(ldef_df, ldef_df$chrom==chr)
 
-		ir = IRanges(start=sub_ldef_df$start, end=sub_ldef_df$end, names=sub_ldef_df$geneid)
+		ir = IRanges::IRanges(start=sub_ldef_df$start, end=sub_ldef_df$end, names=sub_ldef_df$geneid)
 		return(ir)
 	})
 
