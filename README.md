@@ -1,6 +1,6 @@
 # ChIP-Enrich
 
-[![Travis-CI Build Status](https://travis-ci.org/sartorlab/chipenrich.svg?branch=master)](https://travis-ci.org/sartorlab/chipenrich)
+[![Travis-CI Build Status](https://travis-ci.org/sartorlab/chipenrich.svg?branch=master)](https://travis-ci.org/sartorlab/chipenrich)[![Coverage Status](https://coveralls.io/repos/github/sartorlab/chipenrich/badge.svg?branch=master)](https://coveralls.io/github/sartorlab/chipenrich)
 
 R package for gene set enrichment testing using ChIP-seq data.
 

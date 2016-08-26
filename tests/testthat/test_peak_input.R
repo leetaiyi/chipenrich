@@ -5,7 +5,7 @@ reading_logic = function(peaks) {
 	if (class(peaks) == "data.frame") {
 		peakobj = load_peaks(peaks);
 	} else if (class(peaks) == "character") {
-    if (str_sub(peaks,-4,-1) == ".gff" || str_sub(peaks,-5,-1) == '.gff3' || str_sub(peaks,-7,-1) == ".gff.gz" || str_sub(peaks,-8,-1) == '.gff3.gz') {
+    if (stringr::str_sub(peaks,-4,-1) == ".gff" || stringr::str_sub(peaks,-5,-1) == '.gff3' || stringr::str_sub(peaks,-7,-1) == ".gff.gz" || stringr::str_sub(peaks,-8,-1) == '.gff3.gz') {
       message("Reading peaks file: ",peaks);
       peakobj = read_bedgff(peaks);
     } else {
