@@ -165,7 +165,7 @@ data(peaks_E2F4, package = 'chipenrich.data')
 peaks_E2F4 = subset(peaks_E2F4, peaks_E2F4$chrom == 'chr1')
 gs_path = system.file('extdata','vignette_genesets.txt', package='chipenrich')
 results = chipenrich(peaks_E2F4, method='chipenrich', locusdef='nearest_tss',
-			genesets=gs_path, out_name=NULL, max_geneset_size = 20)
+			genesets=gs_path, out_name=NULL)
 
 # Get the list of peaks that were assigned to genes.
 assigned_peaks = results$peaks
