@@ -25,18 +25,18 @@ Imports:
     latticeExtra,
     methods,
     mgcv,
-	parallel,
+    parallel,
     plyr (>= 1.7.0),
     rms,
     S4Vectors,
     stringr (>= 0.6)
 Suggests:
-	BiocStyle,
-	devtools,
-	knitr,
-	rmarkdown,
-	roxygen2,
-	testthat
+    BiocStyle,
+    devtools,
+    knitr,
+    rmarkdown,
+    roxygen2,
+    testthat
 Depends:
     R (>= 3.1.0)
 LazyLoad: yes
@@ -52,10 +52,8 @@ Collate:
     'chipenrich_package_doc.R'
     'peaks_per_gene.R'
     'plot_dist_to_tss.R'
-    'plot_expected_peaks.R'
     'plot_gene_coverage.R'
     'plot_spline_length.R'
-    'plot_spline_mappa.R'
     'randomize.R'
     'read.R'
     'setup.R'
