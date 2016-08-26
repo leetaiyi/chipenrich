@@ -20,10 +20,10 @@
 #' @import methods
 #' @import mgcv
 #' @import parallel
-#' @import plyr
+#' @importFrom plyr rbind.fill
 #' @import rms
 #' @importFrom S4Vectors queryHits subjectHits
 #' @importFrom stats as.formula binom.test coef complete.cases fisher.test fitted na.omit p.adjust pchisq qpois quantile resid
-#' @import stringr
+#' @importFrom stringr str_match
 #' @importFrom utils data read.table tail write.table
 NULL
