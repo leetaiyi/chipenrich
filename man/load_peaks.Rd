@@ -23,6 +23,7 @@ Typically, this function will not be used alone, but inside \code{chipenrich()}.
 
 # Example of BED3 with no header
 data(peaks_H3K4me3_GM12878, package='chipenrich.data')
+peaks_H3K4me3_GM12878 = subset(peaks_H3K4me3_GM12878, peaks_H3K4me3_GM12878$chrom == 'chr1')
 peaks = load_peaks(peaks_H3K4me3_GM12878)
 
 }

@@ -141,6 +141,7 @@ os = Sys.info()[1]
 #' # Run ChipEnrich using an example dataset, assigning peaks to the nearest TSS,
 #' # testing all Biocarta and Panther pathways
 #' data(peaks_E2F4, package = 'chipenrich.data')
+#' peaks_E2F4 = subset(peaks_E2F4, peaks_E2F4$chrom == 'chr1')
 #' gs_path = system.file('extdata','vignette_genesets.txt', package='chipenrich')
 #' results = chipenrich(peaks_E2F4, method='chipenrich', locusdef='nearest_tss',
 #' 			genesets=gs_path, out_name=NULL, max_geneset_size = 20)
