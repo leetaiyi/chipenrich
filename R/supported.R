@@ -38,7 +38,7 @@ supported_read_lengths = function() {
 	df = data.frame(
 		'genome' = combos[,1],
 		'locusdef' = combos[,2],
-		'read_length' = combos[,3],
+		'read_length' = gsub('mer','',combos[,3]),
 		stringsAsFactors = F)
 	return(df)
 }

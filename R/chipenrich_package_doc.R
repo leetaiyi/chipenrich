@@ -24,6 +24,6 @@
 #' @import rms
 #' @importFrom S4Vectors queryHits subjectHits
 #' @importFrom stats as.formula binom.test coef complete.cases fisher.test fitted na.omit p.adjust pchisq qpois quantile resid
-#' @importFrom stringr str_match
+#' @importFrom stringr str_match str_sub
 #' @importFrom utils data read.table tail write.table
 NULL

@@ -10,7 +10,7 @@
 
 <meta name="author" content="Ryan P. Welch, Chee Lee, Raymond G. Cavalcante, Laura J. Scott, Maureen A. Sartor" />
 
-<meta name="date" content="2016-08-25" />
+<meta name="date" content="2016-08-26" />
 
 <title>chipenrich: Gene Set Enrichment For ChIP-seq Peak Data</title>
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="header">
 <h1 class="title"><code>chipenrich</code>: Gene Set Enrichment For ChIP-seq Peak Data</h1>
 <h4 class="author"><em>Ryan P. Welch, Chee Lee, Raymond G. Cavalcante, Laura J. Scott, Maureen A. Sartor</em></h4>
-<h4 class="date"><em>2016-08-25</em></h4>
+<h4 class="date"><em>2016-08-26</em></h4>
 </div>
 
 <h1>Contents</h1>
@@ -109,28 +109,196 @@ head(peaks_E2F4)</code></pre>
 <pre><code>## [1] &quot;dm3&quot;  &quot;hg19&quot; &quot;mm10&quot; &quot;mm9&quot;  &quot;rn4&quot;</code></pre>
 <p>Peaks are assigned to genes according to a pre-defined locus definition, i.e. the region where peaks have to occur in order to be assigned to a gene. The following locus definitions are supported in <code>chipenrich</code>:</p>
 <pre class="r"><code>supported_locusdefs()</code></pre>
-<pre><code>## [1] &quot;10kb&quot;                   &quot;10kb_and_more_upstream&quot;
-## [3] &quot;1kb&quot;                    &quot;5kb&quot;                   
-## [5] &quot;exon&quot;                   &quot;intron&quot;                
-## [7] &quot;nearest_gene&quot;           &quot;nearest_tss&quot;</code></pre>
+<pre><code>##    genome               locusdef
+## 1     dm3                   10kb
+## 2     dm3 10kb_and_more_upstream
+## 3     dm3                    1kb
+## 4     dm3                    5kb
+## 5     dm3                   exon
+## 6     dm3                 intron
+## 7     dm3           nearest_gene
+## 8     dm3            nearest_tss
+## 9    hg19                   10kb
+## 10   hg19 10kb_and_more_upstream
+## 11   hg19                    1kb
+## 12   hg19                    5kb
+## 13   hg19                   exon
+## 14   hg19                 intron
+## 15   hg19           nearest_gene
+## 16   hg19            nearest_tss
+## 17   mm10                   10kb
+## 18   mm10 10kb_and_more_upstream
+## 19   mm10                    1kb
+## 20   mm10                    5kb
+## 21   mm10                   exon
+## 22   mm10                 intron
+## 23   mm10           nearest_gene
+## 24   mm10            nearest_tss
+## 25    mm9                   10kb
+## 26    mm9 10kb_and_more_upstream
+## 27    mm9                    1kb
+## 28    mm9                    5kb
+## 29    mm9                   exon
+## 30    mm9                 intron
+## 31    mm9           nearest_gene
+## 32    mm9            nearest_tss
+## 33    rn4                   10kb
+## 34    rn4 10kb_and_more_upstream
+## 35    rn4                    1kb
+## 36    rn4                    5kb
+## 37    rn4                   exon
+## 38    rn4                 intron
+## 39    rn4           nearest_gene
+## 40    rn4            nearest_tss</code></pre>
 <p>Using the options <code>1kb</code>, <code>5kb</code>, or <code>10kb</code> will only assign peaks to genes if the peaks are within 1 kilobases (kb), 5kb, or 10kb of a gene’s transcription start site (TSS), respectively. The option <code>exon</code> or <code>intron</code> will assign peaks to genes if the peaks occur within a gene’s exons or introns, respectively. The option <code>10kb_and_more_upstream</code> will assign peaks to genes if the peaks occur in a region more than 10kb upstream from a TSS to the midpoint between the adjacent TSS. Using <code>nearest_gene</code> or <code>nearest_tss</code> will assign peaks to genes according to the nearest gene or the nearest TSS. Only the <code>nearest_gene</code> and <code>nearest_tss</code> locus definitions retain all peaks, others use only a subset of peaks that fall within the defined region. All gene loci are non-overlapping. The command <code>help(chipenrich.data)</code> may also provide more information on the locus definitions. Users may also create their own custom locus definitions.</p>
 <p>The default gene set database is Gene Ontology (GO) terms, comprising of all three GO branches (GOBP, GOCC, and GOMF). Though, many more genesets are supported by <code>chipenrich</code>:</p>
 <pre class="r"><code>supported_genesets()</code></pre>
-<pre><code>##  [1] &quot;GOBP&quot;                     &quot;GOCC&quot;                    
-##  [3] &quot;GOMF&quot;                     &quot;biocarta_pathway&quot;        
-##  [5] &quot;cytoband&quot;                 &quot;drug_bank&quot;               
-##  [7] &quot;ehmn_pathway_gene&quot;        &quot;gene_expression&quot;         
-##  [9] &quot;kegg_pathway&quot;             &quot;mesh&quot;                    
-## [11] &quot;metabolite&quot;               &quot;mirbase&quot;                 
-## [13] &quot;panther_pathway&quot;          &quot;pfam&quot;                    
-## [15] &quot;protein_interaction_mimi&quot; &quot;reactome&quot;                
-## [17] &quot;transcription_factors&quot;</code></pre>
+<pre><code>##                     geneset organism
+## 1                      GOBP      dme
+## 5                      GOCC      dme
+## 9                      GOMF      dme
+## 2                      GOBP      hsa
+## 6                      GOCC      hsa
+## 10                     GOMF      hsa
+## 13         biocarta_pathway      hsa
+## 16                 cytoband      hsa
+## 17                drug_bank      hsa
+## 20        ehmn_pathway_gene      hsa
+## 23          gene_expression      hsa
+## 25             kegg_pathway      hsa
+## 28                     mesh      hsa
+## 31               metabolite      hsa
+## 34                  mirbase      hsa
+## 37          panther_pathway      hsa
+## 40                     pfam      hsa
+## 43 protein_interaction_mimi      hsa
+## 46                 reactome      hsa
+## 49    transcription_factors      hsa
+## 3                      GOBP      mmu
+## 7                      GOCC      mmu
+## 11                     GOMF      mmu
+## 14         biocarta_pathway      mmu
+## 18                drug_bank      mmu
+## 21        ehmn_pathway_gene      mmu
+## 24          gene_expression      mmu
+## 26             kegg_pathway      mmu
+## 29                     mesh      mmu
+## 32               metabolite      mmu
+## 35                  mirbase      mmu
+## 38          panther_pathway      mmu
+## 41                     pfam      mmu
+## 44 protein_interaction_mimi      mmu
+## 47                 reactome      mmu
+## 50    transcription_factors      mmu
+## 4                      GOBP      rno
+## 8                      GOCC      rno
+## 12                     GOMF      rno
+## 15         biocarta_pathway      rno
+## 19                drug_bank      rno
+## 22        ehmn_pathway_gene      rno
+## 27             kegg_pathway      rno
+## 30                     mesh      rno
+## 33               metabolite      rno
+## 36                  mirbase      rno
+## 39          panther_pathway      rno
+## 42                     pfam      rno
+## 45 protein_interaction_mimi      rno
+## 48                 reactome      rno
+## 51    transcription_factors      rno</code></pre>
 <p>Three methods for gene set enrichment testing are provided: the main ChIP-Enrich method (<code>chipenrich</code>), the Broad-Enrich method (<code>broadenrich</code>), and Fisher’s exact test (<code>fet</code>). The <code>chipenrich</code> method designed for datasets with narrow genomic regions such as transcription factor ChIP-seq peaks. The <code>broadenrich</code> method is designed for datasets with broad genomic regions such as histone modification ChIP-seq peaks. Finally, the <code>fet</code> method is also offered for comparison purposes and/or for use in limited situations when its assumptions are met (see examples).</p>
 <pre class="r"><code>supported_methods()</code></pre>
 <pre><code>## [1] &quot;chipenrich&quot;  &quot;fet&quot;         &quot;broadenrich&quot;</code></pre>
 <p>Accounting for mappability of reads is optional and can only be accomplished using the ChIP-Enrich or Broad-Enrich method. See the section on mappability for more information on how it is calculated. Mappabilities for the following read lengths are available (24bp is only available for hg19):</p>
 <pre class="r"><code>supported_read_lengths()</code></pre>
-<pre><code>## [1]  24  36  40  50  75 100</code></pre>
+<pre><code>##    genome               locusdef read_length
+## 1    hg19                   10kb         100
+## 2    hg19                   10kb          24
+## 3    hg19                   10kb          36
+## 4    hg19                   10kb          40
+## 5    hg19                   10kb          50
+## 6    hg19                   10kb          75
+## 7    hg19 10kb_and_more_upstream         100
+## 8    hg19 10kb_and_more_upstream          24
+## 9    hg19 10kb_and_more_upstream          36
+## 10   hg19 10kb_and_more_upstream          40
+## 11   hg19 10kb_and_more_upstream          50
+## 12   hg19 10kb_and_more_upstream          75
+## 13   hg19                    1kb         100
+## 14   hg19                    1kb          24
+## 15   hg19                    1kb          36
+## 16   hg19                    1kb          40
+## 17   hg19                    1kb          50
+## 18   hg19                    1kb          75
+## 19   hg19                    5kb         100
+## 20   hg19                    5kb          24
+## 21   hg19                    5kb          36
+## 22   hg19                    5kb          40
+## 23   hg19                    5kb          50
+## 24   hg19                    5kb          75
+## 25   hg19                   exon         100
+## 26   hg19                   exon          24
+## 27   hg19                   exon          36
+## 28   hg19                   exon          40
+## 29   hg19                   exon          50
+## 30   hg19                   exon          75
+## 31   hg19                 intron         100
+## 32   hg19                 intron          24
+## 33   hg19                 intron          36
+## 34   hg19                 intron          40
+## 35   hg19                 intron          50
+## 36   hg19                 intron          75
+## 37   hg19           nearest_gene         100
+## 38   hg19           nearest_gene          24
+## 39   hg19           nearest_gene          36
+## 40   hg19           nearest_gene          40
+## 41   hg19           nearest_gene          50
+## 42   hg19           nearest_gene          75
+## 43   hg19            nearest_tss         100
+## 44   hg19            nearest_tss          24
+## 45   hg19            nearest_tss          36
+## 46   hg19            nearest_tss          40
+## 47   hg19            nearest_tss          50
+## 48   hg19            nearest_tss          75
+## 49    mm9                   10kb         100
+## 50    mm9                   10kb          36
+## 51    mm9                   10kb          40
+## 52    mm9                   10kb          50
+## 53    mm9                   10kb          75
+## 54    mm9 10kb_and_more_upstream         100
+## 55    mm9 10kb_and_more_upstream          36
+## 56    mm9 10kb_and_more_upstream          40
+## 57    mm9 10kb_and_more_upstream          50
+## 58    mm9 10kb_and_more_upstream          75
+## 59    mm9                    1kb         100
+## 60    mm9                    1kb          36
+## 61    mm9                    1kb          40
+## 62    mm9                    1kb          50
+## 63    mm9                    1kb          75
+## 64    mm9                    5kb         100
+## 65    mm9                    5kb          36
+## 66    mm9                    5kb          40
+## 67    mm9                    5kb          50
+## 68    mm9                    5kb          75
+## 69    mm9                   exon         100
+## 70    mm9                   exon          36
+## 71    mm9                   exon          40
+## 72    mm9                   exon          50
+## 73    mm9                   exon          75
+## 74    mm9                 intron         100
+## 75    mm9                 intron          36
+## 76    mm9                 intron          40
+## 77    mm9                 intron          50
+## 78    mm9                 intron          75
+## 79    mm9           nearest_gene         100
+## 80    mm9           nearest_gene          36
+## 81    mm9           nearest_gene          40
+## 82    mm9           nearest_gene          50
+## 83    mm9           nearest_gene          75
+## 84    mm9            nearest_tss         100
+## 85    mm9            nearest_tss          36
+## 86    mm9            nearest_tss          40
+## 87    mm9            nearest_tss          50
+## 88    mm9            nearest_tss          75</code></pre>
 </div>
 <div id="locus-definitions" class="section level1">
 <h1><span class="header-section-number">3</span> Locus Definitions</h1>

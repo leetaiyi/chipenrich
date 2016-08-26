@@ -237,7 +237,7 @@ chipenrich = function(
 	# CHECK genesets and load them if okay
 	# Determine if geneset codes are valid before moving on. The API for a user
 	# to use their own genesets will be to put a path in the genesets argument.
-	if (!check_arg(genesets, supported_genesets()$geneset)) {
+	if (!any(supported_genesets()$organism == organism & genesets == supported_genesets()$geneset)) {
 		bad_args = check_arg(genesets, supported_genesets()$geneset, value=T)
 
 		# If the bad_args is a path that exists, then we know the user wants
@@ -245,7 +245,11 @@ chipenrich = function(
 		if(file.exists(genesets)) {
 			message('User-specified geneset(s)...')
 		} else {
-			stop("Invalid geneset(s) requested: ", paste(bad_args, collapse = ", "))
+			stop(
+				sprintf("Invalid organism / geneset(s) combination requested: %s %s",
+					organism, paste(bad_args, collapse = ", ")
+				)
+			)
 		}
 	}
 
@@ -278,8 +282,12 @@ chipenrich = function(
 		# Load user-defined locus definition file.
 		ldef = setup_ldef(locusdef)
 	} else {
-		if (!locusdef %in% supported_locusdefs()$locusdef) {
-			stop("Error: invalid definition requested: ",locusdef)
+		if (!any(supported_locusdefs()$genome == genome & locusdef == supported_locusdefs()$locusdef)) {
+			stop(
+				sprintf("Error: invalid genome / definition combination requested: %s %s",
+					genome, locusdef
+				)
+			)
 		}
 
 		# Load locus definitions.
@@ -315,8 +323,12 @@ chipenrich = function(
 
 	# Check read length for using built-in mappability
 	if (use_mappability) {
-		if (!as.numeric(read_length) %in% supported_read_lengths()$read_length) {
-			stop("Error: bad read length requested: ", read_length)
+
+		if (!any(supported_read_lengths()$genome == genome & supported_read_lengths()$locusdef == locusdef & supported_read_lengths()$read_length == as.numeric(read_length))) {
+			stop(
+				sprintf("Error: bad genome / locusdef / read length combination requested: %s %s %s",
+					genome, locusdef, read_length)
+			)
 		}
 	}
 
@@ -394,7 +406,7 @@ chipenrich = function(
 		message('Reading peaks from data.frame..')
 		peakobj = load_peaks(peaks)
 	} else if (class(peaks) == "character") {
-		if (str_sub(peaks,-4,-1) == ".gff" || str_sub(peaks,-5,-1) == '.gff3' || str_sub(peaks,-7,-1) == ".gff.gz" || str_sub(peaks,-8,-1) == '.gff3.gz') {
+		if (stringr::str_sub(peaks,-4,-1) == ".gff" || stringr::str_sub(peaks,-5,-1) == '.gff3' || stringr::str_sub(peaks,-7,-1) == ".gff.gz" || stringr::str_sub(peaks,-8,-1) == '.gff3.gz') {
 			message("Reading peaks file: ",peaks)
 			peakobj = read_bedgff(peaks)
 		} else {

@@ -54,14 +54,21 @@ plot_gene_coverage = function(peaks, locusdef = "nearest_tss", genome = 'hg19', 
 	}
 
 	# Check locus definition. Should only be 1.
-	if (!locusdef %in% supported_locusdefs()$locusdef) {
-		stop("bad locus definition requested: ",locusdef)
+	if (!any(supported_locusdefs()$genome == genome & supported_locusdefs()$locusdef == locusdef)) {
+		stop(
+			sprintf("Error: invalid genome / definition combination requested: %s %s",
+				genome, locusdef
+			)
+		)
 	}
 
 	# Check read length.
 	if (use_mappability) {
-		if (!as.numeric(read_length) %in% supported_read_lengths()$read_length) {
-			stop("bad read length requested: ",read_length)
+		if (!any(supported_read_lengths()$genome == genome & supported_read_lengths()$locusdef == locusdef & supported_read_lengths()$read_length == as.numeric(read_length))) {
+			stop(
+				sprintf("Error: bad genome / locusdef / read length combination requested: %s %s %s",
+					genome, locusdef, read_length)
+			)
 		}
 	}
 
@@ -69,7 +76,7 @@ plot_gene_coverage = function(peaks, locusdef = "nearest_tss", genome = 'hg19', 
 	if (class(peaks) == "data.frame") {
 		peakobj = load_peaks(peaks)
 	} else if (class(peaks) == "character") {
-		if (str_sub(peaks,-4,-1) == ".gff" || str_sub(peaks,-5,-1) == '.gff3' || str_sub(peaks,-7,-1) == ".gff.gz" || str_sub(peaks,-8,-1) == '.gff3.gz') {
+		if (stringr::str_sub(peaks,-4,-1) == ".gff" || stringr::str_sub(peaks,-5,-1) == '.gff3' || stringr::str_sub(peaks,-7,-1) == ".gff.gz" || stringr::str_sub(peaks,-8,-1) == '.gff3.gz') {
 			message("Reading peaks file: ", peaks)
 			peakobj = read_bedgff(peaks)
 		} else {
