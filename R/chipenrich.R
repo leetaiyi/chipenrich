@@ -545,8 +545,8 @@ chipenrich = function(
 	}
 
 	# Pull out tests that failed.
-	bad_enrich = subset(enrich,is.na(P.value))
-	enrich = subset(enrich,!is.na(P.value))
+	bad_enrich = subset(enrich, is.na(enrich$P.value))
+	enrich = subset(enrich, !is.na(enrich$P.value))
 
 	######################################################
 	# Write result objects to files
@@ -574,14 +574,14 @@ chipenrich = function(
 		# -- Expected # peaks vs. observed # peaks
 		if (qc_plots) {
 			filename_qcplots = file.path(out_path, sprintf("%s_qcplots.pdf", out_name))
-			pdf(filename_qcplots)
+			grDevices::pdf(filename_qcplots)
 				if (!(method=='broadenrich' || method=='broadenrich_splineless')) {
 					print(..plot_spline_length(ldef, peak_genes, num_peaks, mappa=mappa))
 					print(..plot_dist_to_tss(peakobj, tss))
 				} else {
 					print(..plot_gene_coverage(ppg))
 				}
-			dev.off()
+			grDevices::dev.off()
 			message("Wrote QC plots to: ",filename_qcplots)
 		}
 	}
