@@ -7,7 +7,7 @@
 supported_locusdefs()
 }
 \value{
-A vector indicating the supported locus definitions.
+A \code{data.frame} with columns \code{genome, locusdef}.
 }
 \description{
 Display supported locus definitions

@@ -237,8 +237,8 @@ chipenrich = function(
 	# CHECK genesets and load them if okay
 	# Determine if geneset codes are valid before moving on. The API for a user
 	# to use their own genesets will be to put a path in the genesets argument.
-	if (!check_arg(genesets, supported_genesets())) {
-		bad_args = check_arg(genesets, supported_genesets(), value=T)
+	if (!check_arg(genesets, supported_genesets()$geneset)) {
+		bad_args = check_arg(genesets, supported_genesets()$geneset, value=T)
 
 		# If the bad_args is a path that exists, then we know the user wants
 		# to provide their own genesets
@@ -278,7 +278,7 @@ chipenrich = function(
 		# Load user-defined locus definition file.
 		ldef = setup_ldef(locusdef)
 	} else {
-		if (!locusdef %in% supported_locusdefs()) {
+		if (!locusdef %in% supported_locusdefs()$locusdef) {
 			stop("Error: invalid definition requested: ",locusdef)
 		}
 
@@ -315,7 +315,7 @@ chipenrich = function(
 
 	# Check read length for using built-in mappability
 	if (use_mappability) {
-		if (!as.numeric(read_length) %in% supported_read_lengths()) {
+		if (!as.numeric(read_length) %in% supported_read_lengths()$read_length) {
 			stop("Error: bad read length requested: ", read_length)
 		}
 	}

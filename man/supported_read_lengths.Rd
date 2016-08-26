@@ -7,7 +7,7 @@
 supported_read_lengths()
 }
 \value{
-A vector indicating supported mappability read lengths.
+A \code{data.frame} with columns \code{genome, locusdef, read_length}.
 }
 \description{
 Display supported read lengths for mappability

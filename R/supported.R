@@ -1,6 +1,6 @@
 #' Display supported locus definitions
 #'
-#' @return A vector indicating the supported locus definitions.
+#' @return A \code{data.frame} with columns \code{genome, locusdef}.
 #'
 #' @examples
 #'
@@ -22,7 +22,7 @@ supported_locusdefs = function() {
 
 #' Display supported read lengths for mappability
 #'
-#' @return A vector indicating supported mappability read lengths.
+#' @return A \code{data.frame} with columns \code{genome, locusdef, read_length}.
 #'
 #' @examples
 #'
@@ -45,7 +45,7 @@ supported_read_lengths = function() {
 
 #' Display supported genesets for gene set enrichment.
 #'
-#' @return A vector indicating supported gene sets for enrichment.
+#' @return A \code{data.frame} with columns \code{geneset, organism}.
 #'
 #' @examples
 #'

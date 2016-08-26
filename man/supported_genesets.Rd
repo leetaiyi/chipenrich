@@ -7,7 +7,7 @@
 supported_genesets()
 }
 \value{
-A vector indicating supported gene sets for enrichment.
+A \code{data.frame} with columns \code{geneset, organism}.
 }
 \description{
 Display supported genesets for gene set enrichment.

@@ -54,13 +54,13 @@ plot_gene_coverage = function(peaks, locusdef = "nearest_tss", genome = 'hg19', 
 	}
 
 	# Check locus definition. Should only be 1.
-	if (!locusdef %in% supported_locusdefs()) {
+	if (!locusdef %in% supported_locusdefs()$locusdef) {
 		stop("bad locus definition requested: ",locusdef)
 	}
 
 	# Check read length.
 	if (use_mappability) {
-		if (!as.numeric(read_length) %in% supported_read_lengths()) {
+		if (!as.numeric(read_length) %in% supported_read_lengths()$read_length) {
 			stop("bad read length requested: ",read_length)
 		}
 	}
