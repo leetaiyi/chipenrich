@@ -51,6 +51,7 @@ peak_nearest_tss = function(peaks, tss, midpoint=T) {
 #'
 #' # Create histogram of distance from peaks to nearest TSS.
 #' data(peaks_E2F4, package = 'chipenrich.data')
+#' peaks_E2F4 = subset(peaks_E2F4, peaks_E2F4$chrom == 'chr1')
 #' plot_dist_to_tss(peaks_E2F4)
 #'
 #' @export

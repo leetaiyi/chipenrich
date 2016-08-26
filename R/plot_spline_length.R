@@ -109,6 +109,8 @@ calc_weights_gam = function(locusdef,peak_genes,mappa=NULL,...) {
 #'
 #' # Spline plot for E2F4 example peak dataset.
 #' data(peaks_E2F4, package = 'chipenrich.data')
+#' peaks_E2F4 = subset(peaks_E2F4, peaks_E2F4$chrom == 'chr1')
+#' 
 #' plot_spline_length(peaks_E2F4,genome='hg19')
 #'
 #' # Create the plot for a different locus definition

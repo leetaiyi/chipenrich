@@ -43,6 +43,7 @@ avg_binned_coverage = function(gpw, bin_size = 25) {
 #'
 #' # Spline plot for E2F4 example peak dataset.
 #' data(peaks_E2F4, package = 'chipenrich.data')
+#' peaks_E2F4 = subset(peaks_E2F4, peaks_E2F4$chrom == 'chr1')
 #' plot_gene_coverage(peaks_E2F4)
 #'
 #' @export
