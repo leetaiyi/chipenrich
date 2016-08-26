@@ -230,7 +230,7 @@ chipenrich = function(
 
 	# Load TSS site info.
 	tss_code = sprintf("tss.%s", genome)
-	data(list=tss_code, package = "chipenrich.data")
+	data(list=tss_code, package = "chipenrich.data", envir = environment())
 	tss = get(tss_code)
 
 	############################################################################
@@ -256,7 +256,7 @@ chipenrich = function(
 		geneset_list = list()
 		for (gs in genesets) {
 			geneset_code = sprintf("geneset.%s.%s", gs, organism)
-			data(list = geneset_code, package = "chipenrich.data")
+			data(list = geneset_code, package = "chipenrich.data", envir = environment())
 
 			geneset_list[[geneset_code]] = filter_genesets(get(geneset_code), max_geneset_size)
 		}
@@ -284,7 +284,7 @@ chipenrich = function(
 
 		# Load locus definitions.
 		ldef_code = sprintf("locusdef.%s.%s",genome,locusdef)
-		data(list=ldef_code,package = "chipenrich.data")
+		data(list=ldef_code,package = "chipenrich.data", envir = environment())
 		ldef = get(ldef_code)
 
 		# Randomize locus definition if rndloc == T
@@ -327,7 +327,7 @@ chipenrich = function(
 	} else {
 		if (use_mappability) {
 			mappa_code = sprintf("mappa.%s.%s.%imer", genome, locusdef, read_length)
-			data(list = mappa_code, package = "chipenrich.data")
+			data(list = mappa_code, package = "chipenrich.data", envir = environment())
 			mappa = get(mappa_code)
 			mappa = na.omit(mappa)
 		} else {
@@ -425,7 +425,7 @@ chipenrich = function(
 
 	# Add gene symbols to peak genes using the genes.* object
 	genes_code = sprintf("genes.%s", organism)
-	data(list = genes_code, package = "chipenrich.data")
+	data(list = genes_code, package = "chipenrich.data", envir = environment())
 	gene2symbol = get(genes_code)
 	gene2symbol = change_names(gene2symbol, list(GENEID = "geneid", SYMBOL = "gene_symbol"))
 	assigned_peaks = merge(assigned_peaks, gene2symbol, by="geneid", all.x=T)

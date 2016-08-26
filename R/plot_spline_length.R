@@ -110,7 +110,7 @@ calc_weights_gam = function(locusdef,peak_genes,mappa=NULL,...) {
 #' # Spline plot for E2F4 example peak dataset.
 #' data(peaks_E2F4, package = 'chipenrich.data')
 #' peaks_E2F4 = subset(peaks_E2F4, peaks_E2F4$chrom == 'chr1')
-#' 
+#'
 #' plot_spline_length(peaks_E2F4,genome='hg19')
 #'
 #' # Create the plot for a different locus definition
@@ -154,18 +154,18 @@ plot_spline_length = function(peaks, locusdef = "nearest_tss", genome = 'hg19', 
 
 	# Load locus definitions.
 	ldef_code = sprintf("locusdef.%s.%s", genome, locusdef)
-	data(list = ldef_code, package = "chipenrich.data")
+	data(list = ldef_code, package = "chipenrich.data", envir = environment())
 	ldef = get(ldef_code)
 
 	# Load TSS site info.
 	tss_code = sprintf("tss.%s", genome)
-	data(list = tss_code, package = "chipenrich.data")
+	data(list = tss_code, package = "chipenrich.data", envir = environment())
 	tss = get(tss_code)
 
 	# Load mappability if requested.
 	if (use_mappability) {
 		mappa_code = sprintf("mappa.%s.%s.%imer", genome, locusdef, read_length)
-		data(list = mappa_code, package = "chipenrich.data")
+		data(list = mappa_code, package = "chipenrich.data", envir = environment())
 		mappa = get(mappa_code)
 	} else {
 		mappa = NULL

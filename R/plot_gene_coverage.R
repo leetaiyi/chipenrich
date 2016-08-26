@@ -83,13 +83,13 @@ plot_gene_coverage = function(peaks, locusdef = "nearest_tss", genome = 'hg19', 
 
 	# Load locus definitions.
 	ldef_code = sprintf("locusdef.%s.%s", genome, locusdef)
-	data(list = ldef_code, package = "chipenrich.data")
+	data(list = ldef_code, package = "chipenrich.data", envir = environment())
 	ldef = get(ldef_code)
 
 	# Load mappability if requested.
 	if (use_mappability) {
 		mappa_code = sprintf("mappa.%s.%s.%imer", genome, locusdef, read_length)
-		data(list = mappa_code, package = "chipenrich.data")
+		data(list = mappa_code, package = "chipenrich.data", envir = environment())
 		mappa = get(mappa_code)
 	} else {
 		mappa = NULL

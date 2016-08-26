@@ -71,7 +71,7 @@ plot_dist_to_tss = function(peaks, genome='hg19') {
 
 	# Load TSS site info.
 	tss_code = sprintf("tss.%s", genome)
-	data(list = tss_code, package = "chipenrich.data")
+	data(list = tss_code, package = "chipenrich.data", envir = environment())
 	tss = get(tss_code)
 
 	plotobj = ..plot_dist_to_tss(peakobj, tss)
