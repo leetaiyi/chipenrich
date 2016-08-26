@@ -1,8 +1,8 @@
 Package: chipenrich
 Type: Package
 Title: Gene Set Enrichment For ChIP-seq Peak Data
-Version: 1.11.3
-Date: 2016-05-30
+Version: 1.11.4
+Date: 2016-08-26
 Authors@R: c(
 	person(c("Ryan","P."),"Welch",role = c("aut","cph"),email = "welchr@umich.edu"),
 	person("Chee","Lee",role = c("aut"),email = "cheelee@umich.edu"),
@@ -18,18 +18,18 @@ License: GPL-3
 Imports:
     chipenrich.data,
     GenomeInfoDb,
-    GenomicRanges (>= 1.10.0),
+    GenomicRanges,
     grid,
-    IRanges (>= 1.16.0),
+    IRanges,
     lattice,
     latticeExtra,
     methods,
     mgcv,
     parallel,
-    plyr (>= 1.7.0),
+    plyr,
     rms,
     S4Vectors,
-    stringr (>= 0.6)
+    stringr
 Suggests:
     BiocStyle,
     devtools,
@@ -45,19 +45,19 @@ RoxygenNote: 5.0.1
 VignetteBuilder: knitr
 Collate:
     'assign_peaks.R'
+    'test_gam.R'
+    'test_fisher.R'
+    'test_binomial.R'
+    'test_approx.R'
+    'peaks_per_gene.R'
+    'read.R'
+    'randomize.R'
+    'setup.R'
     'supported.R'
     'utils.R'
     'constants.R'
+    'plot_spline_length.R'
+    'plot_gene_coverage.R'
+    'plot_dist_to_tss.R'
     'chipenrich.R'
     'chipenrich_package_doc.R'
-    'peaks_per_gene.R'
-    'plot_dist_to_tss.R'
-    'plot_gene_coverage.R'
-    'plot_spline_length.R'
-    'randomize.R'
-    'read.R'
-    'setup.R'
-    'test_approx.R'
-    'test_binomial.R'
-    'test_fisher.R'
-    'test_gam.R'

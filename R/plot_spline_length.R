@@ -118,6 +118,8 @@ calc_weights_gam = function(locusdef,peak_genes,mappa=NULL,...) {
 #' plot_spline_length(peaks_E2F4, locusdef = 'nearest_gene', genome = 'hg19')
 #'
 #' @export
+#' @include constants.R utils.R supported.R setup.R randomize.R
+#' @include read.R assign_peaks.R peaks_per_gene.R
 plot_spline_length = function(peaks, locusdef = "nearest_tss", genome = 'hg19', use_mappability = F, read_length = 36, legend = T, xlim = NULL) {
 	# Check genome.
 	if (!genome %in% supported_genomes()) {

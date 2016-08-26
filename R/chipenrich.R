@@ -153,7 +153,10 @@ os = Sys.info()[1]
 #' enrich = results$results
 #'
 #' @export
-#' @include constants.R utils.R supported.R
+#' @include constants.R utils.R supported.R setup.R randomize.R
+#' @include read.R assign_peaks.R peaks_per_gene.R
+#' @include plot_dist_to_tss.R plot_gene_coverage.R plot_spline_length.R
+#' @include test_approx.R test_binomial.R test_fisher.R test_gam.R
 chipenrich = function(
 	peaks,
 	out_name = "chipenrich",

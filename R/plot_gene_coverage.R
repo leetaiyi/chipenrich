@@ -47,6 +47,8 @@ avg_binned_coverage = function(gpw, bin_size = 25) {
 #' plot_gene_coverage(peaks_E2F4)
 #'
 #' @export
+#' @include constants.R utils.R supported.R setup.R randomize.R
+#' @include read.R assign_peaks.R peaks_per_gene.R
 plot_gene_coverage = function(peaks, locusdef = "nearest_tss", genome = 'hg19', use_mappability = F, read_length = 36, legend = T, xlim = NULL) {
 	# Check genome.
 	if (!genome %in% supported_genomes()) {

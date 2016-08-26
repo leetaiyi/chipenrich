@@ -55,6 +55,8 @@ peak_nearest_tss = function(peaks, tss, midpoint=T) {
 #' plot_dist_to_tss(peaks_E2F4)
 #'
 #' @export
+#' @include constants.R utils.R supported.R setup.R randomize.R
+#' @include read.R assign_peaks.R peaks_per_gene.R
 plot_dist_to_tss = function(peaks, genome='hg19') {
 	# Get peaks from user's file.
 	if (class(peaks) == "data.frame") {
