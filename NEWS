@@ -1,3 +1,27 @@
+CHANGES IN VERSION 1.11.4
+-------------------------
+
+PKG FEATURES
+
+  o Back-end refactoring of the code base.
+
+    o Break out functions in main.R into .R files collecting similar functions.
+
+    o Transition documentation to roxygen2 blocks.
+
+    o Improve commenting in chipenrich() function.
+
+  o Assigning peaks using GenomicRanges object rather than than list of IRanges.
+
+  o Rewrite package vignette in Rmarkdown and render with knitr.
+
+  o Improve supported_*() functions to report and check combinations of genome,
+    organism, genesets, locusdef, and mappability read length.
+
+  o Cleanup DESCRIPTION and NAMESPACE to avoid loading entire packages.
+
+  o Follow data() best practices.
+
 CHANGES IN VERSION 1.3.4
 ------------------------
 

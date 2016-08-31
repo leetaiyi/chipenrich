@@ -1,28 +1,63 @@
 Package: chipenrich
 Type: Package
 Title: Gene Set Enrichment For ChIP-seq Peak Data
-Version: 1.11.3
-Date: 2016-05-30
+Version: 1.11.4
+Date: 2016-08-26
 Authors@R: c(
-  person(c("Ryan","P."),"Welch",role = c("aut","cph"),email = "welchr@umich.edu"),
-  person("Chee","Lee",role = c("aut","cre"),email = "cheelee@umich.edu"),
-  person(c("Raymond","G."),"Cavalcante",role = c("aut","cre"),email = "rcavalca@umich.edu"),
-  person(c("Laura","J."),"Scott",role = c("ths"), email = "ljst@umich.edu"),
-  person(c("Maureen","A."),"Sartor",role = c("ths"),email = "sartorma@med.umich.edu"))
+	person(c("Ryan","P."),"Welch",role = c("aut","cph"),email = "welchr@umich.edu"),
+	person("Chee","Lee",role = c("aut"),email = "cheelee@umich.edu"),
+	person(c("Raymond","G."),"Cavalcante",role = c("aut","cre"),email = "rcavalca@umich.edu"),
+	person(c("Laura","J."),"Scott",role = c("ths"), email = "ljst@umich.edu"),
+	person(c("Maureen","A."),"Sartor",role = c("ths"),email = "sartorma@med.umich.edu"))
 Description: ChIP-Enrich performs gene set enrichment testing
-	using peaks called from a ChIP-seq experiment. The method empirically
-	corrects for confounding factors such as the length of genes,
-	and the mappability of the sequence surrounding genes.
+    using peaks called from a ChIP-seq experiment. The method empirically
+    corrects for confounding factors such as the length of genes,
+    and the mappability of the sequence surrounding genes.
 biocViews: Software, Bioinformatics, Enrichment, GeneSetEnrichment
 License: GPL-3
-Imports: chipenrich.data, methods, GenomicRanges (>= 1.10.0), IRanges (>= 1.16.0), mgcv, plyr (>= 1.7.0), lattice, latticeExtra, grid, stringr (>= 0.6), rms
-Suggests: testthat
-Depends: R (>= 2.15.1)
-Enhances: parallel
+Imports:
+    chipenrich.data,
+    GenomeInfoDb,
+    GenomicRanges,
+    grid,
+    IRanges,
+    lattice,
+    latticeExtra,
+    methods,
+    mgcv,
+    parallel,
+    plyr,
+    rms,
+    S4Vectors,
+    stringr
+Suggests:
+    BiocStyle,
+    devtools,
+    knitr,
+    rmarkdown,
+    roxygen2,
+    testthat
+Depends:
+    R (>= 3.1.0)
 LazyLoad: yes
-Author: Ryan P. Welch [aut, cre, cph],
-  Chee Lee [aut, cre],
-  Raymond G. Cavalcante [aut, cre],
-  Laura J. Scott [ths],
-  Maureen A. Sartor [ths]
-Maintainer: Raymond G. Cavalcante <rcavalca@umich.edu>, Chee Lee <cheelee@umich.edu>
+Maintainer: Raymond G. Cavalcante <rcavalca@umich.edu>
+RoxygenNote: 5.0.1
+VignetteBuilder: knitr
+Collate:
+    'assign_peaks.R'
+    'test_gam.R'
+    'test_fisher.R'
+    'test_binomial.R'
+    'test_approx.R'
+    'peaks_per_gene.R'
+    'read.R'
+    'randomize.R'
+    'setup.R'
+    'supported.R'
+    'utils.R'
+    'constants.R'
+    'plot_spline_length.R'
+    'plot_gene_coverage.R'
+    'plot_dist_to_tss.R'
+    'chipenrich.R'
+    'chipenrich_package_doc.R'
