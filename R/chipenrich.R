@@ -520,6 +520,12 @@ chipenrich = function(
 		if (testf == "test_gam_ratio_splineless") {
 			rtemp = test_func(gobj,ppg,n_cores)
 		}
+		if (testf == "test_gam_nb") {
+			rtemp = test_func(gobj,ppg,n_cores);
+		}
+		if (testf == "test_gam_fast") {
+			rtemp = test_func(gobj,ppg,n_cores);
+		}
 
 		# Annotate with geneset descriptions.
 		rtemp$"Description" = as.character(mget(rtemp$Geneset.ID, gobj@set.name, ifnotfound=NA))
