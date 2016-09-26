@@ -23,6 +23,7 @@ HIDDEN_METHODS = list(
   'broadenrich_splineless' = "test_gam_ratio_splineless",
   'countenrich' = 'test_gam_nb',
   'chipenrich_fast' = 'test_gam_fast'
+  'countenrich_fast' = 'test_gam_nb_fast'
 );
 
 METHOD_NAMES = list(
@@ -32,7 +33,8 @@ METHOD_NAMES = list(
 	'chipapprox' = "ChIP-Enrich Approximate",
 	'broadenrich_splineless' = "Broad-Enrich Splineless",
 	'countenrich' = 'Count-Enrich',
-	'chipenrich_fast' = 'ChIP-Enrich Fast'
+	'chipenrich_fast' = 'ChIP-Enrich Fast',
+	'countenrich_fast' = 'Count-Enrich Fast'
 );
 
 # This is the main function to read files
@@ -2413,6 +2415,9 @@ chipenrich = function(
     if (testf == "test_gam_fast") {
       rtemp = test_func(gobj,ppg,n_cores);
     }
+  	if (testf == "test_gam_nb_fast") {
+  		rtemp = test_func(gobj,ppg,n_cores);
+  	}
 
     # Annotate with geneset descriptions.
     rtemp$"Description" = as.character(mget(rtemp$Geneset.ID,gobj@set.name,ifnotfound=NA));
