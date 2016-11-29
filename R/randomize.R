@@ -105,6 +105,7 @@ randomize_ppg_all = function(ppg) {
 
 # Randomize ppg after all additions have been made within length bins
 randomize_ppg_length = function(ppg) {
+	ppg = ppg[sample(1:nrow(ppg),nrow(ppg)),]
 	ppg = ppg[order(ppg$length),]
 	rownames(ppg) = 1:nrow(ppg)
 
